@@ -2,8 +2,6 @@
 
 This is intended to be a Web API template to create new projects moving forward.
 
-We can all as a team contribute to enhance this template.
-
 This template is based on: .Net Core 3.1 and it's compatible with Visual Studio 2017/2019
 
 ## Dependencies ##
