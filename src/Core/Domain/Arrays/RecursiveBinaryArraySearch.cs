@@ -4,6 +4,7 @@ namespace Core.Domain.Arrays
 {
 	public class RecursiveBinaryArraySearch : IArraySearch
 	{
+#pragma warning disable S3900 // Arguments of public methods should be validated against null
 		public int Search<T>(T[] source, T key)
 			where T : IComparable<T>
 		{
@@ -12,8 +13,19 @@ namespace Core.Domain.Arrays
 				throw new ArgumentNullException(nameof(source));
 			}
 
+			if (source.Length == 0)
+			{
+				return -1;
+			}
+
+			if (key.CompareTo(source[0]) < 0 || key.CompareTo(source[^1]) > 0)
+			{
+				return -1;
+			}
+
 			return DoSearch(source, key, 0, source.Length - 1);
 		}
+#pragma warning restore S3900 // Arguments of public methods should be validated against null
 
 		private int DoSearch<T>(T[] source, T key, int min, int max)
 			where T : IComparable<T>
