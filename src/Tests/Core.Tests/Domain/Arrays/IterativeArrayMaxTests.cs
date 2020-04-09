@@ -15,10 +15,14 @@ namespace Core.Tests.Domain.Arrays
 			var fixture = new Fixture().Customize(new AutoMoqCustomization());
 			var sut = fixture.Create<IterativeArrayMax>();
 			var source = new[] { 8, 98, 100, -4, -6, 0, 4, 20, 56, 2 };
+			int res;
 
-			int res = sut.Maximum(source);
-
+			res = sut.Maximum(source);
 			res.Should().Be(100);
+
+			source = new[] { -4, -6, -3, -6, -45 };
+			res = sut.Maximum(source);
+			res.Should().Be(-3);
 		}
 	}
 }
