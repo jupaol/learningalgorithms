@@ -78,6 +78,5 @@ namespace Core.Domain.Arrays
 #pragma warning restore S3900 // Arguments of public methods should be validated against null
 #pragma warning restore S1541 // Methods and properties should not be too complex
 #pragma warning restore S3776 // Cognitive Complexity of methods should not be too high
-
 	}
 }
