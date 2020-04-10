@@ -6,5 +6,8 @@ namespace Core.Domain.Arrays
 	{
 		T FindMinimum<T>(T[] source1, T[] source2, T[] source3, T defaultIfNotFound)
 			where T : IComparable<T>;
+
+		T FindMaximum<T>(T[] source1, T[] source2, T[] source3, T defaultIfNotFound)
+			where T : IComparable<T>;
 	}
 }
