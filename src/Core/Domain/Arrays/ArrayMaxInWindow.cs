@@ -34,23 +34,21 @@ namespace Core.Domain.Arrays
 				T maxPerWindow = default;
 				bool maxSet = false;
 
-				for (int j = i; j < (windowSize + i) - 1; j++)
+				for (int j = i; j < windowSize + i; j++)
 				{
-					T currentMax = source[j].CompareTo(source[j + 1]) > 0 ? source[j] : source[j + 1];
-
 					// if it's first iteration for the "window" we don't take into consideration the
 					// current value of the variable "max"
 					if (!maxSet)
 					{
-						maxPerWindow = currentMax;
+						maxPerWindow = source[j];
 						maxSet = true;
 
 						continue;
 					}
 
-					if (currentMax.CompareTo(maxPerWindow) > 0)
+					if (source[j].CompareTo(maxPerWindow) > 0)
 					{
-						maxPerWindow = currentMax;
+						maxPerWindow = source[j];
 					}
 				}
 
