@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Core.Tests.Domain.Arrays.Search
 {
 	[TestClass]
-	public class BinarySearchRotatedUnkownSeedIterativeTests
+	public class BinarySearchRotatedUnknownSeedIterativeTests
 	{
 		[TestClass]
 		public class TheSearchMethod
@@ -16,7 +16,7 @@ namespace Core.Tests.Domain.Arrays.Search
 			public void It_should_search_a_value_in_a_right_rotated_array_using_binary_search()
 			{
 				var fixture = new Fixture().Customize(new AutoMoqCustomization());
-				var sut = fixture.Create<BinarySearchRotatedUnkownSeedIterative>();
+				var sut = fixture.Create<BinarySearchRotatedUnknownSeedIterative>();
 				int res;
 				var source = new[] { 69, 80, 100, 1, 2, 4, 7, 8, 12, 15, 19, 24, 50 };
 
@@ -40,7 +40,7 @@ namespace Core.Tests.Domain.Arrays.Search
 			public void It_should_search_a_value_in_a_right_rotated_array_using_binary_search_with_duplicates()
 			{
 				var fixture = new Fixture().Customize(new AutoMoqCustomization());
-				var sut = fixture.Create<BinarySearchRotatedUnkownSeedIterative>();
+				var sut = fixture.Create<BinarySearchRotatedUnknownSeedIterative>();
 				int res;
 				var source = new[]
 				{
