@@ -1,4 +1,4 @@
-﻿namespace Core.Domain.Arrays.Rotate
+﻿namespace Core.Domain
 {
 	public enum RotationType
 	{

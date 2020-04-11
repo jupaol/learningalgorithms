@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoMoq;
+using Core.Domain;
 using Core.Domain.Arrays.Rotate;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
