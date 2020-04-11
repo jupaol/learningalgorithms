@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class IndexInSortedArray : IIndexInSortedArray
+	public class IndexInSortedArray
 	{
 #pragma warning disable S3900 // Arguments of public methods should be validated against null
 		public int FindMinimumIndex<T>(T[] source, T key)

@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class CommonNumberInArrays : ICommonNumberInArrays
+	public class CommonNumberInArrays
 	{
 		public T FindMinimum<T>(T[] source1, T[] source2, T[] source3, T defaultIfNotFound)
 			where T : IComparable<T>

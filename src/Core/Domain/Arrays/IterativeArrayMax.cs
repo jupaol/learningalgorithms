@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class IterativeArrayMax : IArrayMax
+	public class IterativeArrayMax
 	{
 		public T Maximum<T>(T[] source)
 			where T : IComparable<T>

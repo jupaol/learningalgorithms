@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class RecursiveQuickSortTraditional : ISortArray
+	public class RecursiveQuickSortTraditional
 	{
 		public T[] Sort<T>(T[] source)
 			where T : IComparable<T>

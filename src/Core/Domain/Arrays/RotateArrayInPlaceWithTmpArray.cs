@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class RotateArrayInPlaceWithTmpArray : IRotateArray
+	public class RotateArrayInPlaceWithTmpArray
 	{
 		public T[] Rotate<T>(T[] source, int positions, RotationType rotationType)
 		{

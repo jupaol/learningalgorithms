@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class BubbleSort : ISortArray
+	public class BubbleSort
 	{
 		public T[] Sort<T>(T[] source)
 			where T : IComparable<T>

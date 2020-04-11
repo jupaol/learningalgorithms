@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class MoveItemsInArray : IMoveItemsInArray
+	public class MoveItemsInArray
 	{
 		public T[] MoveLeft<T>(T[] source, T key)
 			where T : IComparable<T>

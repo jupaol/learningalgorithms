@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class RecursiveBinaryArraySearch : IArraySearch
+	public class RecursiveBinaryArraySearch
 	{
 #pragma warning disable S3900 // Arguments of public methods should be validated against null
 		public int Search<T>(T[] source, T key)

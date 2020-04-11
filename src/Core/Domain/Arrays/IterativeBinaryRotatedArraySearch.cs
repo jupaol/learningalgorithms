@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class IterativeBinaryRotatedArraySearch : IRotatedArraySearch
+	public class IterativeBinaryRotatedArraySearch
 	{
 #pragma warning disable S3900 // Arguments of public methods should be validated against null
 		public int Search<T>(T[] source, T key, int rotatedPositions, RotationType rotationType)

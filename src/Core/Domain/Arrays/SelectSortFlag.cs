@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class SelectSortFlag : ISortArray
+	public class SelectSortFlag
 	{
 		public T[] Sort<T>(T[] source)
 			where T : IComparable<T>

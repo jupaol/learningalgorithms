@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Arrays
 {
-	public class RecursiveQuickSortRandomized : ISortArray
+	public class RecursiveQuickSortRandomized
 	{
 		private readonly Random _random = new Random((int)DateTime.Now.Ticks);
 

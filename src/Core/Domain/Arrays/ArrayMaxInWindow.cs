@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Core.Domain.Arrays
 {
-	public class ArrayMaxInWindow : IArrayMaxInWindow
+	public class ArrayMaxInWindow
 	{
 		public T[] MaximumInWindow<T>(T[] source, int windowSize)
 			where T : IComparable<T>
