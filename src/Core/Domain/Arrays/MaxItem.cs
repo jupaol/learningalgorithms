@@ -17,18 +17,11 @@ namespace Core.Domain.Arrays
 				throw new ArgumentException("Empty array", nameof(source));
 			}
 
-			T max = default;
+			T max = source[0];
 
-			for (int i = 0; i < source.Length - 1; i++)
+			for (int i = 1; i < source.Length; i++)
 			{
-				if (i == 0)
-				{
-					max = source[i].CompareTo(source[i + 1]) > 0 ? source[i] : source[i + 1];
-
-					continue;
-				}
-
-				if (source[i].CompareTo(source[i + 1]) > 0 && source[i].CompareTo(max) > 0)
+				if (source[i].CompareTo(max) > 0)
 				{
 					max = source[i];
 				}
