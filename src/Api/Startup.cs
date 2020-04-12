@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Api
 {
@@ -27,7 +28,9 @@ namespace Api
 			services.ConfigureSwagger();
 		}
 
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
+#pragma warning disable S3242 // Method parameters should be declared with base types
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+#pragma warning restore S3242 // Method parameters should be declared with base types
 		{
 			if (env.IsDevelopment())
 			{
