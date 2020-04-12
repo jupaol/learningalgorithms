@@ -31,15 +31,15 @@ namespace Core.Domain.Arrays.Search
 					return mid;
 				}
 
-				////if (key.CompareTo(source[left]) == 0)
-				////{
-				////	return left;
-				////}
+				if (key.CompareTo(source[left]) == 0)
+				{
+					return left;
+				}
 
-				////if (key.CompareTo(source[right]) == 0)
-				////{
-				////	return right;
-				////}
+				if (key.CompareTo(source[right]) == 0)
+				{
+					return right;
+				}
 
 				bool isLeftSorted = source[left].CompareTo(source[mid]) <= 0;
 				bool isRightSorted = source[mid].CompareTo(source[right]) <= 0;
@@ -56,20 +56,19 @@ namespace Core.Domain.Arrays.Search
 				{
 					left = mid + 1;
 				}
-				////else if (!isRightSorted && isLeftSorted)
-				else if (isLeftSorted)
+				else if (!isRightSorted && isLeftSorted)
 				{
 					left = mid + 1;
 				}
-				else ////if (!isLeftSorted && isRightSorted)
+				else if (!isLeftSorted && isRightSorted)
 				{
 					right = mid - 1;
 				}
-				////else
-				////{
-				////	left++;
-				////	right--;
-				////}
+				else
+				{
+					left++;
+					right--;
+				}
 			}
 
 			return -1;
