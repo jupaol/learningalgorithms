@@ -1,5 +1,4 @@
 ﻿using System;
-using Core.Domain.Arrays.Rotate;
 
 namespace Core.Domain.Arrays.Search
 {

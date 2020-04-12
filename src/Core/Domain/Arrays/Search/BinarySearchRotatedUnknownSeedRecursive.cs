@@ -37,15 +37,15 @@ namespace Core.Domain.Arrays.Search
 				return mid;
 			}
 
-			if (key.CompareTo(source[left]) == 0)
-			{
-				return left;
-			}
+			////if (key.CompareTo(source[left]) == 0)
+			////{
+			////	return left;
+			////}
 
-			if (key.CompareTo(source[right]) == 0)
-			{
-				return right;
-			}
+			////if (key.CompareTo(source[right]) == 0)
+			////{
+			////	return right;
+			////}
 
 			bool isLeftSorted = source[left].CompareTo(source[mid]) <= 0;
 			bool isRightSorted = source[mid].CompareTo(source[right]) <= 0;
@@ -64,17 +64,20 @@ namespace Core.Domain.Arrays.Search
 				return DoSearch(source, key, mid + 1, right);
 			}
 
-			if (!isLeftSorted && isRightSorted)
+			////if (!isLeftSorted && isRightSorted)
+			if (!isLeftSorted)
 			{
 				return DoSearch(source, key, left, mid - 1);
 			}
 
-			if (!isRightSorted && isLeftSorted)
-			{
-				return DoSearch(source, key, mid + 1, right);
-			}
+			return DoSearch(source, key, mid + 1, right);
 
-			return DoSearch(source, key, left + 1, right - 1);
+			////if (!isRightSorted && isLeftSorted)
+			////{
+			////	return DoSearch(source, key, mid + 1, right);
+			////}
+
+			////return DoSearch(source, key, left + 1, right - 1);
 		}
 #pragma warning restore S3900 // Arguments of public methods should be validated against null
 	}
