@@ -5,7 +5,7 @@ namespace Core.Domain.Arrays.Search
 	public class BinarySearchRotatedRecursive
 	{
 #pragma warning disable S3900 // Arguments of public methods should be validated against null
-		public int Search<T>(T[] source, T key, int rotatedPositions, RotationType rotationType)
+		public int Search<T>(T[] source, T key, int rotatedPositions, Direction direction)
 			where T : IComparable<T>
 		{
 			if (source == null)
@@ -25,9 +25,9 @@ namespace Core.Domain.Arrays.Search
 				return DoSearch(source, key, 0, source.Length - 1);
 			}
 
-			switch (rotationType)
+			switch (direction)
 			{
-				case RotationType.Right:
+				case Direction.Right:
 				{
 					// searches the second half of the array
 					int res = DoSearch(source, key, offset, source.Length - 1);
@@ -36,7 +36,7 @@ namespace Core.Domain.Arrays.Search
 					return res == -1 ? DoSearch(source, key, 0, offset - 1) : res;
 				}
 
-				case RotationType.Left:
+				case Direction.Left:
 				{
 					// searches the second half of the array
 					int res = DoSearch(source, key, source.Length - offset, source.Length - 1);
@@ -46,7 +46,7 @@ namespace Core.Domain.Arrays.Search
 				}
 
 				default:
-					throw new ArgumentOutOfRangeException(nameof(rotationType), rotationType, null);
+					throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
 			}
 		}
 #pragma warning restore S3900 // Arguments of public methods should be validated against null

@@ -1,6 +1,6 @@
 ﻿namespace Core.Domain
 {
-	public enum RotationType
+	public enum Direction
 	{
 		Right = 0,
 		Left = 1

@@ -23,17 +23,17 @@ namespace Core.Tests.Domain.Arrays.Search
 
 				for (int i = 0; i < source.Length; i++)
 				{
-					res = sut.Search(source, source[i], 3, RotationType.Right);
+					res = sut.Search(source, source[i], 3, Direction.Right);
 					res.Should().Be(i);
 				}
 
-				res = sut.Search(source, -4, 3, RotationType.Right);
+				res = sut.Search(source, -4, 3, Direction.Right);
 				res.Should().Be(-1);
 
-				res = sut.Search(source, 400, 3, RotationType.Right);
+				res = sut.Search(source, 400, 3, Direction.Right);
 				res.Should().Be(-1);
 
-				res = sut.Search(source, 6, 3, RotationType.Right);
+				res = sut.Search(source, 6, 3, Direction.Right);
 				res.Should().Be(-1);
 			}
 
@@ -47,17 +47,17 @@ namespace Core.Tests.Domain.Arrays.Search
 
 				for (int i = 0; i < source.Length; i++)
 				{
-					res = sut.Search(source, source[i], 3, RotationType.Left);
+					res = sut.Search(source, source[i], 3, Direction.Left);
 					res.Should().Be(i);
 				}
 
-				res = sut.Search(source, -4, 3, RotationType.Left);
+				res = sut.Search(source, -4, 3, Direction.Left);
 				res.Should().Be(-1);
 
-				res = sut.Search(source, 400, 3, RotationType.Left);
+				res = sut.Search(source, 400, 3, Direction.Left);
 				res.Should().Be(-1);
 
-				res = sut.Search(source, 6, 3, RotationType.Left);
+				res = sut.Search(source, 6, 3, Direction.Left);
 				res.Should().Be(-1);
 			}
 		}

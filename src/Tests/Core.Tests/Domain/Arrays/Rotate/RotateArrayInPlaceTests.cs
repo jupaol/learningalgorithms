@@ -21,33 +21,33 @@ namespace Core.Tests.Domain.Arrays.Rotate
 				int[] source = { 1, 2, 4, 7, 8, 12, 15, 19, 24, 50, 69, 80, 100 };
 				int[] res;
 
-				res = sut.Rotate(source, 13, RotationType.Right);
+				res = sut.Rotate(source, 13, Direction.Right);
 				res.Should().ContainInOrder(1, 2, 4, 7, 8, 12, 15, 19, 24, 50, 69, 80, 100);
 
-				res = sut.Rotate(source, 39, RotationType.Right);
+				res = sut.Rotate(source, 39, Direction.Right);
 				res.Should().ContainInOrder(1, 2, 4, 7, 8, 12, 15, 19, 24, 50, 69, 80, 100);
 
-				res = sut.Rotate(source, 3, RotationType.Right);
+				res = sut.Rotate(source, 3, Direction.Right);
 				res.Should().ContainInOrder(69, 80, 100, 1, 2, 4, 7, 8, 12, 15, 19, 24, 50);
 
 				source = new[] { 4, 6, 1, 0, -1 };
-				res = sut.Rotate(source, 7, RotationType.Right);
+				res = sut.Rotate(source, 7, Direction.Right);
 				res.Should().ContainInOrder(0, -1, 4, 6, 1);
 
 				source = new[] { 4, 6, 1, 0, -1 };
-				res = sut.Rotate(source, 1, RotationType.Right);
+				res = sut.Rotate(source, 1, Direction.Right);
 				res.Should().ContainInOrder(-1, 4, 6, 1, 0);
 
 				source = new[] { 4 };
-				res = sut.Rotate(source, 7, RotationType.Right);
+				res = sut.Rotate(source, 7, Direction.Right);
 				res.Should().ContainInOrder(4);
 
 				source = new[] { 4, 5 };
-				res = sut.Rotate(source, 7, RotationType.Right);
+				res = sut.Rotate(source, 7, Direction.Right);
 				res.Should().ContainInOrder(5, 4);
 
 				source = new[] { 4, 5, 8 };
-				res = sut.Rotate(source, 7, RotationType.Right);
+				res = sut.Rotate(source, 7, Direction.Right);
 				res.Should().ContainInOrder(8, 4, 5);
 			}
 
@@ -59,33 +59,33 @@ namespace Core.Tests.Domain.Arrays.Rotate
 				int[] source = { 1, 2, 4, 7, 8, 12, 15, 19, 24, 50, 69, 80, 100 };
 				int[] res;
 
-				res = sut.Rotate(source, 13, RotationType.Left);
+				res = sut.Rotate(source, 13, Direction.Left);
 				res.Should().ContainInOrder(1, 2, 4, 7, 8, 12, 15, 19, 24, 50, 69, 80, 100);
 
-				res = sut.Rotate(source, 39, RotationType.Left);
+				res = sut.Rotate(source, 39, Direction.Left);
 				res.Should().ContainInOrder(1, 2, 4, 7, 8, 12, 15, 19, 24, 50, 69, 80, 100);
 
-				res = sut.Rotate(source, 3, RotationType.Left);
+				res = sut.Rotate(source, 3, Direction.Left);
 				res.Should().ContainInOrder(7, 8, 12, 15, 19, 24, 50, 69, 80, 100, 1, 2, 4);
 
 				source = new[] { 4, 6, 1, 0, -1 };
-				res = sut.Rotate(source, 7, RotationType.Left);
+				res = sut.Rotate(source, 7, Direction.Left);
 				res.Should().ContainInOrder(1, 0, -1, 4, 6);
 
 				source = new[] { 4, 6, 1, 0, -1 };
-				res = sut.Rotate(source, 1, RotationType.Left);
+				res = sut.Rotate(source, 1, Direction.Left);
 				res.Should().ContainInOrder(6, 1, 0, -1, 4);
 
 				source = new[] { 4 };
-				res = sut.Rotate(source, 7, RotationType.Left);
+				res = sut.Rotate(source, 7, Direction.Left);
 				res.Should().ContainInOrder(4);
 
 				source = new[] { 4, 5 };
-				res = sut.Rotate(source, 7, RotationType.Left);
+				res = sut.Rotate(source, 7, Direction.Left);
 				res.Should().ContainInOrder(5, 4);
 
 				source = new[] { 4, 5, 8 };
-				res = sut.Rotate(source, 7, RotationType.Left);
+				res = sut.Rotate(source, 7, Direction.Left);
 				res.Should().ContainInOrder(5, 8, 4);
 			}
 		}

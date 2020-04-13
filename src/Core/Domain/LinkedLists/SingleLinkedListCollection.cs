@@ -77,9 +77,75 @@ namespace Core.Domain.LinkedLists
 			Head = null;
 		}
 
+		public SingleLinkedListNode<T> GetAtIndex(int index)
+		{
+			if (index < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(index));
+			}
+
+			if (Head == null)
+			{
+				return null;
+			}
+
+			int count = 0;
+			SingleLinkedListNode<T> current = Head;
+
+			while (current != null && count < index)
+			{
+				count++;
+				current = current.Next;
+			}
+
+			return current;
+		}
+
+		public SingleLinkedListNode<T> GetAtIndexFromTail(int index)
+		{
+			if (index < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(index));
+			}
+
+			if (Head == null)
+			{
+				return null;
+			}
+
+			int count = 0;
+			SingleLinkedListNode<T> current = Head;
+			SingleLinkedListNode<T> prev = Head;
+
+			while (current != null && count <= index)
+			{
+				count++;
+				current = current.Next;
+			}
+
+			if (count <= index)
+			{
+				// index grater than list size
+				return null;
+			}
+
+			while (current != null)
+			{
+				current = current.Next;
+				prev = prev.Next;
+			}
+
+			return prev;
+		}
+
 		public T[] ToArray()
 		{
-			SingleLinkedListNode<T> current = Head;
+			return ToArray(Head);
+		}
+
+		public T[] ToArray(SingleLinkedListNode<T> head)
+		{
+			SingleLinkedListNode<T> current = head;
 			var list = new List<T>();
 
 			while (current != null)

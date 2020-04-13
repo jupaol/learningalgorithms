@@ -16,6 +16,12 @@ namespace Core.Domain.LinkedLists
 
 		void Clear();
 
+		SingleLinkedListNode<T> GetAtIndex(int index);
+
+		SingleLinkedListNode<T> GetAtIndexFromTail(int index);
+
 		T[] ToArray();
+
+		T[] ToArray(SingleLinkedListNode<T> head);
 	}
 }

@@ -4,7 +4,7 @@ namespace Core.Domain.Arrays.Rotate
 {
 	public class RotateArrayInPlace
 	{
-		public T[] Rotate<T>(T[] source, int positions, RotationType rotationType)
+		public T[] Rotate<T>(T[] source, int positions, Direction direction)
 		{
 			if (source == null)
 			{
@@ -25,7 +25,7 @@ namespace Core.Domain.Arrays.Rotate
 
 			SwapAll(source, 0, source.Length - 1);
 
-			if (rotationType == RotationType.Left)
+			if (direction == Direction.Left)
 			{
 				offset = source.Length - offset;
 			}
