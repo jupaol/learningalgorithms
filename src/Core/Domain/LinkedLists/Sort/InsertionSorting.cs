@@ -2,9 +2,9 @@
 
 namespace Core.Domain.LinkedLists.Sort
 {
-	public static class InsertionSort
+	public static class InsertionSorting
 	{
-		public static SingleLinkedListNode<T> Sort<T>(this ISingleLinkedListCollection<T> source)
+		public static SingleLinkedListNode<T> SortUsingInsertion<T>(this ISingleLinkedListCollection<T> source)
 			where T : IComparable<T>
 		{
 			if (source == null)
@@ -24,7 +24,7 @@ namespace Core.Domain.LinkedLists.Sort
 			{
 				SingleLinkedListNode<T> tmp = c.Next;
 
-				sortedHead = InsertSort(c, sortedHead);
+				sortedHead = InsertElement(c, sortedHead);
 
 				c = tmp;
 			}
@@ -34,7 +34,7 @@ namespace Core.Domain.LinkedLists.Sort
 			return source.Head;
 		}
 
-		private static SingleLinkedListNode<T> InsertSort<T>(
+		private static SingleLinkedListNode<T> InsertElement<T>(
 			SingleLinkedListNode<T> incomingNode, SingleLinkedListNode<T> sortedHead)
 			where T : IComparable<T>
 		{
