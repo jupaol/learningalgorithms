@@ -23,5 +23,7 @@ namespace Core.Domain.LinkedLists
 		T[] ToArray();
 
 		T[] ToArray(SingleLinkedListNode<T> head);
+
+		void SetArbitraryLinkByValue(T source, T target);
 	}
 }

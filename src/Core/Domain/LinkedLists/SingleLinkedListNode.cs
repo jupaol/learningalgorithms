@@ -14,5 +14,7 @@
 		public T Item { get; set; }
 
 		public SingleLinkedListNode<T> Next { get; set; }
+
+		public SingleLinkedListNode<T> ArbitraryLink { get; set; }
 	}
 }

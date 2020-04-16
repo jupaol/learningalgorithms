@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Domain.LinkedLists.Search;
 
 namespace Core.Domain.LinkedLists
 {
@@ -156,6 +157,37 @@ namespace Core.Domain.LinkedLists
 			}
 
 			return list.ToArray();
+		}
+
+		public void SetArbitraryLinkByValue(T source, T target)
+		{
+			SingleLinkedListNode<T> current = Head;
+			bool found = false;
+
+			while (current != null)
+			{
+				if (current.Item.Equals(source))
+				{
+					SingleLinkedListNode<T> targetNode =
+						this.SearchUsingLinear(target);
+
+					if (targetNode == null)
+					{
+						throw new Exception($".{target}' not found!");
+					}
+
+					found = true;
+
+					current.ArbitraryLink = targetNode;
+				}
+
+				current = current.Next;
+			}
+
+			if (!found)
+			{
+				throw new Exception($".{source}' not found!");
+			}
 		}
 
 		public IEnumerator<SingleLinkedListNode<T>> GetEnumerator()
