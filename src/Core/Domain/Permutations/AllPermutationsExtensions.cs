@@ -17,13 +17,13 @@ namespace Core.Domain.Permutations
 
 			var list = new List<string>();
 
-			GetAllPermutations(string.Empty, source, list);
+			GetAllStringPermutationsUsingRecursion(string.Empty, source, list);
 
 			return list.ToArray();
 		}
 
-		public static IEnumerable<IEnumerable<T>> GetAllPermutationsUsingRecursion<T>(
-			this IEnumerable<T> source)
+		public static IEnumerable<IEnumerable<T>> GetAllPermutationsNotInLexOrderUsingRecursion<T>(
+			this ILearningCollection<T> source)
 		{
 			if (source == null)
 			{
@@ -33,12 +33,52 @@ namespace Core.Domain.Permutations
 			T[] a = source.ToArray();
 			var list = new List<T[]>();
 
-			GetAllPermutations(a, 0, list);
+			GetAllPermutationsNotInLexOrder(a, 0, list);
 
 			return list;
 		}
 
-		private static void GetAllPermutations<T>(T[] a, int start, ICollection<T[]> list)
+		public static IEnumerable<IEnumerable<T>> GetAllPermutationsUsingRecursion<T>(
+			this ILearningCollection<T> source)
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException(nameof(source));
+			}
+
+			var list = new List<T[]>();
+
+			GetAllPermutationsUsingRecursion(new List<T>(), source.ToList(), list);
+
+			return list;
+		}
+
+		private static void GetAllPermutationsUsingRecursion<T>(
+			IList<T> set, ICollection<T> choices, ICollection<T[]> list)
+		{
+			if (choices.Count == 0)
+			{
+				list.Add(set.ToArray());
+
+				return;
+			}
+
+			for (int i = 0; i < choices.Count; i++)
+			{
+				ICollection<T> tmpChoices = choices.Where((_, index) => index != i).ToList();
+
+				set.Add(choices.ElementAt(i));
+
+				GetAllPermutationsUsingRecursion(
+					set,
+					tmpChoices,
+					list);
+
+				set.RemoveAt(set.Count - 1);
+			}
+		}
+
+		private static void GetAllPermutationsNotInLexOrder<T>(T[] a, int start, ICollection<T[]> list)
 		{
 			if (start >= a.Length)
 			{
@@ -50,12 +90,12 @@ namespace Core.Domain.Permutations
 			for (int i = start; i < a.Length; i++)
 			{
 				Swap(a, i, start);
-				GetAllPermutations(a, start + 1, list);
+				GetAllPermutationsNotInLexOrder(a, start + 1, list);
 				Swap(a, i, start);
 			}
 		}
 
-		private static void GetAllPermutations(string prefix, string suffix, IList<string> list)
+		private static void GetAllStringPermutationsUsingRecursion(string prefix, string suffix, IList<string> list)
 		{
 			if (string.IsNullOrWhiteSpace(suffix))
 			{
@@ -65,7 +105,7 @@ namespace Core.Domain.Permutations
 
 			for (int i = 0; i < suffix.Length; i++)
 			{
-				GetAllPermutations(
+				GetAllStringPermutationsUsingRecursion(
 					prefix + suffix[i].ToString(CultureInfo.InvariantCulture),
 					suffix.Substring(0, 0 + i) + suffix.Substring(i + 1),
 					list);
