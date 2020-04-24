@@ -53,4 +53,10 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Domain\General\input01.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

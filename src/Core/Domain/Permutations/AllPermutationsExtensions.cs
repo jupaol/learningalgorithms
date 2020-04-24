@@ -53,6 +53,74 @@ namespace Core.Domain.Permutations
 			return list;
 		}
 
+		public static IEnumerable<IEnumerable<T>> GetAllPermutationsOptimizedForDuplicatesUsingRecursion<T>(
+			this ILearningCollection<T> source)
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException(nameof(source));
+			}
+
+			var res = new List<ICollection<T>>();
+			IDictionary<T, int> counts = new Dictionary<T, int>();
+
+			for (int i = 0; source.Skip(i).Any(); i++)
+			{
+				if (counts.ContainsKey(source.ElementAt(i)))
+				{
+					counts[source.ElementAt(i)]++;
+				}
+				else
+				{
+					counts.Add(source.ElementAt(i), 1);
+				}
+			}
+
+			GetAllPermutationsOptimizedForDuplicatesUsingRecursion(
+				new T[source.Count()],
+				counts.Keys.ToArray(),
+				counts.Values.ToArray(),
+				0,
+				res);
+
+			return res;
+		}
+
+		private static void GetAllPermutationsOptimizedForDuplicatesUsingRecursion<T>(
+			T[] currentPermutation,
+			T[] choices,
+			int[] counts,
+			int level,
+			ICollection<ICollection<T>> res)
+		{
+			if (level == currentPermutation.Length)
+			{
+				res.Add((T[])currentPermutation.ToArray().Clone());
+
+				return;
+			}
+
+			for (int i = 0; i < choices.Length; i++)
+			{
+				if (counts[i] == 0)
+				{
+					continue;
+				}
+
+				counts[i]--;
+				currentPermutation[level] = choices[i];
+
+				GetAllPermutationsOptimizedForDuplicatesUsingRecursion(
+					currentPermutation,
+					choices,
+					counts,
+					level + 1,
+					res);
+
+				counts[i]++;
+			}
+		}
+
 		private static void GetAllPermutationsUsingRecursion<T>(
 			IList<T> set, ICollection<T> choices, ICollection<T[]> list)
 		{
