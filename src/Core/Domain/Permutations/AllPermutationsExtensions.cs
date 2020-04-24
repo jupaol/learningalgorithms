@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace Core.Domain.Permutations
 {
+	/// <summary>
+	/// Permutations formula:
+	/// nPk = n! / (n-k)!
+	/// </summary>
 	public static class AllPermutationsExtensions
 	{
 		public static string[] GetAllStringPermutationsUsingRecursion(
