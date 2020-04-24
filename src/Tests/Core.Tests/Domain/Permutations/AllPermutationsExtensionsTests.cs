@@ -99,26 +99,32 @@ namespace Core.Tests.Domain.Permutations
 				int[][] res;
 				ILearningCollection<int> sut;
 
-				////source = new[] { 1, 2, 3 };
-				////sut = source.AsLearningCollection();
-				////res = sut.GetAllPermutationsOptimizedForDuplicatesUsingRecursion().Select(
-				////	x => x.ToArray()).ToArray();
-				////res.Length.Should().Be(GetFactorial(source.Length));
-				////res[0].Should().ContainInOrder(new[] { 1, 2, 3 });
-				////res[1].Should().ContainInOrder(new[] { 1, 3, 2 });
-				////res[2].Should().ContainInOrder(new[] { 2, 1, 3 });
-				////res[3].Should().ContainInOrder(new[] { 2, 3, 1 });
-				////res[4].Should().ContainInOrder(new[] { 3, 1, 2 });
-				////res[5].Should().ContainInOrder(new[] { 3, 2, 1 });
+				source = new[] { 1, 2, 3 };
+				sut = source.AsLearningCollection();
+				res = sut.GetAllPermutationsOptimizedForDuplicatesUsingRecursion().Select(
+					x => x.ToArray()).ToArray();
+				res.Length.Should().Be(GetFactorial(source.Length));
+				res[0].Should().ContainInOrder(new[] { 1, 2, 3 });
+				res[1].Should().ContainInOrder(new[] { 1, 3, 2 });
+				res[2].Should().ContainInOrder(new[] { 2, 1, 3 });
+				res[3].Should().ContainInOrder(new[] { 2, 3, 1 });
+				res[4].Should().ContainInOrder(new[] { 3, 1, 2 });
+				res[5].Should().ContainInOrder(new[] { 3, 2, 1 });
 
 				source = new[] { 1, 3, 3 };
 				sut = source.AsLearningCollection();
 				res = sut.GetAllPermutationsOptimizedForDuplicatesUsingRecursion().Select(
 					x => x.ToArray()).ToArray();
-				res.Length.Should().Be(3); // n! / 2! (2 because there are two duplicates)
+				res.Length.Should().Be(3); // 3! / 2! (2 because there are two duplicates)
 				res[0].Should().ContainInOrder(new[] { 1, 3, 3 });
 				res[1].Should().ContainInOrder(new[] { 3, 1, 3 });
 				res[2].Should().ContainInOrder(new[] { 3, 3, 1 });
+
+				source = new[] { 1, 2, 3, 4, 5 };
+				sut = source.AsLearningCollection();
+				res = sut.GetAllPermutationsOptimizedForDuplicatesUsingRecursion().Select(
+					x => x.ToArray()).ToArray();
+				res.Length.Should().Be(GetFactorial(source.Length));
 			}
 		}
 	}
