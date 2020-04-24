@@ -48,8 +48,13 @@ namespace Core.Domain.Combinations
 		{
 			res.Add((T[])currentCombination.ToArray().Clone());
 
-			for (int i = index; i < choices.Length && counts[i] != 0; i++)
+			for (int i = index; i < choices.Length; i++)
 			{
+				if (counts[i] == 0)
+				{
+					continue;
+				}
+
 				counts[i]--;
 				currentCombination.Add(choices[i]);
 
@@ -57,7 +62,7 @@ namespace Core.Domain.Combinations
 					currentCombination,
 					choices,
 					counts,
-					index + 1,
+					i,
 					res);
 
 				counts[i]++;
