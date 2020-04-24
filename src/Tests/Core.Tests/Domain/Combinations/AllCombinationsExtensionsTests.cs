@@ -79,5 +79,31 @@ namespace Core.Tests.Domain.Combinations
 				res[5].Should().ContainInOrder(new[] { 3, 3 });
 			}
 		}
+
+		[TestClass]
+		public class TheGetAllCombinationsUsingBinaryMethodMethod
+		{
+			[TestMethod]
+			public void It_should_return_all_the_combinations_using_binary_method()
+			{
+				int[] source;
+				int[][] res;
+				ILearningCollection<int> sut;
+
+				source = new[] { 1, 2, 3 };
+				sut = source.AsLearningCollection();
+				res = sut.GetAllCombinationsUsingBinaryMethod()
+					.Select(x => x.ToArray()).ToArray();
+				res.Length.Should().Be(8);
+				res[0].Should().BeEmpty();
+				res[1].Should().ContainInOrder(new[] { 1 });
+				res[2].Should().ContainInOrder(new[] { 2 });
+				res[3].Should().ContainInOrder(new[] { 1, 2 });
+				res[4].Should().ContainInOrder(new[] { 3 });
+				res[5].Should().ContainInOrder(new[] { 1, 3 });
+				res[6].Should().ContainInOrder(new[] { 2, 3 });
+				res[7].Should().ContainInOrder(new[] { 1, 2, 3 });
+			}
+		}
 	}
 }
