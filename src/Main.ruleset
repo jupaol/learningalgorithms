@@ -617,7 +617,7 @@
     <Rule Id="S1309" Action="Info" />
     <Rule Id="S131" Action="Error" />
     <Rule Id="S134" Action="None" />
-    <Rule Id="S138" Action="Error" />
+    <Rule Id="S138" Action="None" />
     <Rule Id="S1449" Action="Error" />
     <Rule Id="S1450" Action="Error" />
     <Rule Id="S1451" Action="None" />
