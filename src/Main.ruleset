@@ -284,7 +284,7 @@
     <Rule Id="RCS1026" Action="Error" />
     <Rule Id="RCS1027" Action="Error" />
     <Rule Id="RCS1028" Action="Error" />
-    <Rule Id="RCS1029" Action="Error" />
+    <Rule Id="RCS1029" Action="None" />
     <Rule Id="RCS1030" Action="Error" />
     <Rule Id="RCS1032" Action="Error" />
     <Rule Id="RCS1032FadeOut" Action="Error" />
