@@ -97,5 +97,22 @@ namespace Core.Tests.Domain.Trees.BinaryTrees.BinarySearchTrees
 				res.Item.Should().Be(9);
 			}
 		}
+
+		[TestClass]
+		public class TheCalculateHeightRecursivelyMethod
+		{
+			[TestMethod]
+			public void It_should_return_the_tree_height()
+			{
+				int[] source;
+				int res;
+				var sut = new LearningBinaryTreeCollection<int>();
+
+				source = new[] { 4, 8, 2, 8, 9, 4, 1, 2, 9 };
+				source.ToList().ForEach(x => sut.AddRecursively(x));
+				res = sut.CalculateHeightRecursively();
+				res.Should().Be(3);
+			}
+		}
 	}
 }

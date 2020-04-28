@@ -22,6 +22,10 @@ namespace Core.Domain.Trees.BinaryTrees
 
 		IBinaryTreeNode<T> MaximumIteratively();
 
+		int CalculateHeightRecursively();
+
+		int CalculateHeightIteratively();
+
 		IBinaryTreeNode<T> FindRecursively(T item);
 	}
 }

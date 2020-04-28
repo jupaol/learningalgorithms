@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using Core.Domain.General;
+﻿using Core.Domain.Queues;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Core.Tests.Domain.General
+namespace Core.Tests.Domain.Queues
 {
 	[TestClass]
 	public class QueueWithStacksCollectionTests

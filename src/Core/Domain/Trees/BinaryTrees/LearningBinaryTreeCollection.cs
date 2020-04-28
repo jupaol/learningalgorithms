@@ -93,6 +93,21 @@ namespace Core.Domain.Trees.BinaryTrees
 			return current;
 		}
 
+		public int CalculateHeightRecursively()
+		{
+			if (Root == null)
+			{
+				return 0;
+			}
+
+			return CalculateHeightUsingRec(Root);
+		}
+
+		public int CalculateHeightIteratively()
+		{
+			throw new NotImplementedException();
+		}
+
 		public IBinaryTreeNode<T> FindRecursively(T item)
 		{
 			if (Root == null)
@@ -191,6 +206,17 @@ namespace Core.Domain.Trees.BinaryTrees
 			}
 
 			return root;
+		}
+
+		private int CalculateHeightUsingRec(IBinaryTreeNode<T> root)
+		{
+			if (root == null)
+			{
+				return -1;
+			}
+
+			return
+				Math.Max(CalculateHeightUsingRec(root.Left), CalculateHeightUsingRec(root.Right)) + 1;
 		}
 	}
 }

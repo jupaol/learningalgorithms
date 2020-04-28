@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Core.Domain.General
+namespace Core.Domain.Queues
 {
 	public class QueueWithStacksCollection<T> : IEnumerable<T>
 	{
