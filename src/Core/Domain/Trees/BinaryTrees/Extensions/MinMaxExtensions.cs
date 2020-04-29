@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Trees.BinaryTrees.Extensions
 {
-	public static class LearningBinaryTreeMinMaxExtensions
+	public static class MinMaxExtensions
 	{
 		public static IBinaryTreeNode<T> MinimumRecursively<T>(this ILearningBinaryTreeCollection<T> source)
 			where T : IComparable<T>

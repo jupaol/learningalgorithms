@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Core.Domain.Trees.BinaryTrees.Extensions
 {
-	public static class LearningBinaryTreeHeightExtensions
+	public static class HeightExtensions
 	{
 		public static int CalculateHeightRecursively<T>(this ILearningBinaryTreeCollection<T> source)
 			where T : IComparable<T>

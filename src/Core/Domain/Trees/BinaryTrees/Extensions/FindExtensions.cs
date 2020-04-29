@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Trees.BinaryTrees.Extensions
 {
-	public static class LearningBinaryTreeFindExtensions
+	public static class FindExtensions
 	{
 		public static IBinaryTreeNode<T> FindRecursively<T>(
 			this ILearningBinaryTreeCollection<T> source, T item)

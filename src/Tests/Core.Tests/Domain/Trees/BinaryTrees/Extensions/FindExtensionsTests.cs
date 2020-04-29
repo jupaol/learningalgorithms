@@ -3,7 +3,7 @@
 namespace Core.Tests.Domain.Trees.BinaryTrees.Extensions
 {
 	[TestClass]
-	public class LearningBinaryTreeFindExtensionsTests
+	public class FindExtensionsTests
 	{
 	}
 }

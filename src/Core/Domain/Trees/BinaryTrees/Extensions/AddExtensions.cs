@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Core.Domain.Trees.BinaryTrees.Extensions
 {
-	public static class LearningBinaryTreeAddExtensions
+	public static class AddExtensions
 	{
 		public static IBinaryTreeNode<T> AddRecursively<T>(
 			this ILearningBinaryTreeCollection<T> source, T item)

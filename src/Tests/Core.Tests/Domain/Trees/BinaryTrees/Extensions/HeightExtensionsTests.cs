@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Core.Tests.Domain.Trees.BinaryTrees.Extensions
 {
 	[TestClass]
-	public class LearningBinaryTreeHeightExtensionsTests
+	public class HeightExtensionsTests
 	{
 		[TestClass]
 		public class TheCalculateHeightRecursivelyMethod
