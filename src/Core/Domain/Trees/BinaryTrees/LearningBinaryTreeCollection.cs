@@ -97,15 +97,50 @@ namespace Core.Domain.Trees.BinaryTrees
 		{
 			if (Root == null)
 			{
-				return 0;
+				return -1;
 			}
 
 			return CalculateHeightUsingRec(Root);
 		}
 
+		// Counting levels in a level order traversal will give us the height
 		public int CalculateHeightIteratively()
 		{
-			throw new NotImplementedException();
+			if (Root == null)
+			{
+				return -1;
+			}
+
+			int height = -1;
+			var nodes = new Queue<IBinaryTreeNode<T>>();
+
+			nodes.Enqueue(Root);
+
+			while (nodes.Count > 0)
+			{
+				int size = nodes.Count;
+
+				while (size > 0)
+				{
+					IBinaryTreeNode<T> current = nodes.Dequeue();
+
+					if (current.Left != null)
+					{
+						nodes.Enqueue(current.Left);
+					}
+
+					if (current.Right != null)
+					{
+						nodes.Enqueue(current.Right);
+					}
+
+					size--;
+				}
+
+				height++;
+			}
+
+			return height;
 		}
 
 		public IBinaryTreeNode<T> FindRecursively(T item)
