@@ -21,29 +21,29 @@ namespace Core.Domain.Trees.BinaryTrees.Extensions
 				return Enumerable.Empty<T>();
 			}
 
-			var stack = new Stack<IBinaryTreeNode<T>>();
+			var queue = new Queue<IBinaryTreeNode<T>>();
 			var list = new List<T>();
 
-			stack.Push(source.Root);
+			queue.Enqueue(source.Root);
 
-			while (stack.Count > 0)
+			while (queue.Count > 0)
 			{
-				int size = stack.Count;
+				int size = queue.Count;
 
 				while (size > 0)
 				{
-					IBinaryTreeNode<T> current = stack.Pop();
+					IBinaryTreeNode<T> current = queue.Dequeue();
 
 					list.Add(current.Item);
 
-					if (current.Right != null)
-					{
-						stack.Push(current.Right);
-					}
-
 					if (current.Left != null)
 					{
-						stack.Push(current.Left);
+						queue.Enqueue(current.Left);
+					}
+
+					if (current.Right != null)
+					{
+						queue.Enqueue(current.Right);
 					}
 
 					size--;

@@ -27,6 +27,56 @@ namespace Core.Domain.Trees.BinaryTrees.Extensions
 			return list;
 		}
 
+		public static IEnumerable<T> GetInPostOrderTraversalIteratively<T>(
+			this ILearningBinaryTreeCollection<T> source)
+			where T : IComparable<T>
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException(nameof(source));
+			}
+
+			if (source.Root == null)
+			{
+				return Enumerable.Empty<T>();
+			}
+
+			var list = new List<T>();
+			var stack = new Stack<IBinaryTreeNode<T>>();
+			IBinaryTreeNode<T> current = source.Root;
+
+			while (stack.Count > 0 || current != null)
+			{
+				if (current != null)
+				{
+					stack.Push(current);
+					current = current.Left;
+				}
+				else
+				{
+					IBinaryTreeNode<T> right = stack.Peek().Right;
+
+					if (right != null)
+					{
+						current = right;
+					}
+					else
+					{
+						right = stack.Pop();
+						list.Add(right.Item);
+
+						while (stack.Count > 0 && stack.Peek().Right == right)
+						{
+							right = stack.Pop();
+							list.Add(right.Item);
+						}
+					}
+				}
+			}
+
+			return list;
+		}
+
 		private static void GetInPostOrderTraversalUsingRecursion<T>(
 			IBinaryTreeNode<T> node, ICollection<T> list)
 			where T : IComparable<T>

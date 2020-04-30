@@ -43,24 +43,20 @@ namespace Core.Domain.Trees.BinaryTrees.Extensions
 
 			var list = new List<T>();
 			var stack = new Stack<IBinaryTreeNode<T>>();
+			IBinaryTreeNode<T> current = source.Root;
 
-			stack.Push(source.Root);
-
-			while (stack.Count > 0)
+			while (stack.Count > 0 || current != null)
 			{
-				IBinaryTreeNode<T> current = stack.Pop();
-
 				if (current != null)
 				{
-					stack.Push(current.Left);
+					stack.Push(current);
+					current = current.Left;
 				}
 				else
 				{
 					current = stack.Pop();
-
 					list.Add(current.Item);
-
-					stack.Push(current.Right);
+					current = current.Right;
 				}
 			}
 
