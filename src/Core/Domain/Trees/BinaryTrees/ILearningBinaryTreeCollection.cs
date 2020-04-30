@@ -6,5 +6,7 @@ namespace Core.Domain.Trees.BinaryTrees
 		where T : IComparable<T>
 	{
 		IBinaryTreeNode<T> Root { get; set; }
+
+		void Clear();
 	}
 }

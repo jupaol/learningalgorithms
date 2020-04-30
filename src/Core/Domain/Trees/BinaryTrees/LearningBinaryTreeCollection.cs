@@ -9,6 +9,11 @@ namespace Core.Domain.Trees.BinaryTrees
 	{
 		public IBinaryTreeNode<T> Root { get; set; }
 
+		public void Clear()
+		{
+			Root = null;
+		}
+
 		public IEnumerator<T> GetEnumerator()
 		{
 			throw new System.NotImplementedException();
