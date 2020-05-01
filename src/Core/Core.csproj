@@ -40,8 +40,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\Trees\BinaryTrees\BinarySearchTrees\" />
-  </ItemGroup>
-
 </Project>

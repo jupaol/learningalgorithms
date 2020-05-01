@@ -11,6 +11,7 @@
 			Item = item;
 			Left = null;
 			Right = null;
+			Next = null;
 		}
 
 		public T Item { get; set; }
@@ -18,5 +19,7 @@
 		public IBinaryTreeNode<T> Left { get; set; }
 
 		public IBinaryTreeNode<T> Right { get; set; }
+
+		public IBinaryTreeNode<T> Next { get; set; }
 	}
 }

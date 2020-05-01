@@ -8,5 +8,11 @@ namespace Core.Domain.Trees.BinaryTrees
 		IBinaryTreeNode<T> Root { get; set; }
 
 		void Clear();
+
+		bool HasNext();
+
+		void ResetIteration();
+
+		IBinaryTreeNode<T> GetNext();
 	}
 }
