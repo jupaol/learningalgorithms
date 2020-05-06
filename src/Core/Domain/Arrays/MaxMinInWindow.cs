@@ -53,5 +53,49 @@ namespace Core.Domain.Arrays
 
 			return maximums.ToArray();
 		}
+
+		public T[] MaximumInWindowUsingDequeue<T>(T[] source, int windowSize)
+			where T : IComparable<T>
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException(nameof(source));
+			}
+
+			if (windowSize <= 0 || windowSize > source.Length || source.Length == 0)
+			{
+				return Array.Empty<T>();
+			}
+
+			if (windowSize == 1)
+			{
+				return source;
+			}
+
+			var maximums = new List<T>();
+			var list = new LinkedList<int>();
+
+			for (int i = 0; i < source.Length; i++)
+			{
+				if (list.Count > 0 && list.First.Value == i - windowSize)
+				{
+					list.RemoveFirst();
+				}
+
+				while (list.Count > 0 && source[list.Last.Value].CompareTo(source[i]) < 0)
+				{
+					list.RemoveLast();
+				}
+
+				list.AddLast(i);
+
+				if (i >= windowSize - 1)
+				{
+					maximums.Add(source[list.First.Value]);
+				}
+			}
+
+			return maximums.ToArray();
+		}
 	}
 }

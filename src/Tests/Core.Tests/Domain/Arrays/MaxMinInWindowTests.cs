@@ -55,5 +55,30 @@ namespace Core.Tests.Domain.Arrays
 				res.Should().ContainInOrder(100);
 			}
 		}
+
+		[TestClass]
+		public class TheMaximumInWindowUsingDequeueMethod
+		{
+			[TestMethod]
+			public void It_should_return_the_maximum_in_the_windows_using_dequeues()
+			{
+				var fixture = new Fixture().Customize(new AutoMoqCustomization());
+				var sut = fixture.Create<MaxMinInWindow>();
+				int[] res;
+				int[] source = { 8, 98, 100, -4, -6, 0, 4, 20, 56, 2 };
+
+				res = sut.MaximumInWindowUsingDequeue(source, 3);
+				res.Should().ContainInOrder(100, 100, 100, 0, 4, 20, 56, 56);
+
+				res = sut.MaximumInWindowUsingDequeue(source, 10);
+				res.Should().ContainInOrder(100);
+
+				res = sut.MaximumInWindowUsingDequeue(source, 1);
+				res.Should().ContainInOrder(source);
+
+				res = sut.MaximumInWindowUsingDequeue(source, 0);
+				res.Should().BeEmpty();
+			}
+		}
 	}
 }
