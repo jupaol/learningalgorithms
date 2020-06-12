@@ -1,33 +1,9 @@
-<!DOCTYPE html>
-<html>
+---
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strings</title>
-  <link rel="stylesheet" href="https://stackedit.io/style.css" />
-</head>
 
-<body class="stackedit">
-  <div class="stackedit__left">
-    <div class="stackedit__toc">
-      
-<ul>
-<li><a href="#strings">Strings</a>
-<ul>
-<li><a href="#find-anagrams">Find Anagrams</a></li>
-<li><a href="#longest-substring-wo-repeating-chars">Longest Substring w/o repeating chars</a></li>
-<li><a href="#longest-substring-with-at-most-2-distinct-characters">Longest substring with at most 2 distinct characters</a></li>
-<li><a href="#minimum-window-substring">Minimum Window Substring</a></li>
-</ul>
-</li>
-</ul>
+---
 
-    </div>
-  </div>
-  <div class="stackedit__right">
-    <div class="stackedit__html">
-      <h1 id="strings">Strings</h1>
+<h1 id="strings">Strings</h1>
 <h2 id="find-anagrams">Find Anagrams</h2>
 <h3 id="problems">Problems</h3>
 <ul>
@@ -154,8 +130,3 @@
 }
 </code></pre>
 
-    </div>
-  </div>
-</body>
-
-</html>
