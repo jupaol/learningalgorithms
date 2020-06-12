@@ -229,7 +229,41 @@ You can use Handlebars built-in helpers and the custom StackEdit ones:
 </ul>
  will limit the TOC depth to 3.
 -->
-[object Object]
+
+<ul>
+<li><a href="#strings">Strings</a>
+<ul>
+<li><a href="#find-anagrams">Find Anagrams</a>
+<ul>
+<li><a href="#problems">Problems</a></li>
+<li><a href="#two-pointers">Two pointers</a></li>
+</ul>
+</li>
+<li><a href="#longest-substring-wo-repeating-chars">Longest Substring w/o repeating chars</a>
+<ul>
+<li><a href="#problems-1">Problems</a></li>
+<li><a href="#template">Template</a></li>
+<li><a href="#iterative-using-template">Iterative (using template</a></li>
+</ul>
+</li>
+<li><a href="#longest-substring-with-at-most-2-distinct-characters">Longest substring with at most 2 distinct characters</a>
+<ul>
+<li><a href="#problems-2">Problems</a></li>
+<li><a href="#template-1">Template</a></li>
+<li><a href="#iterative-with-template">Iterative with template</a></li>
+</ul>
+</li>
+<li><a href="#minimum-window-substring">Minimum Window Substring</a>
+<ul>
+<li><a href="#problems-3">Problems</a></li>
+<li><a href="#template-2">Template</a></li>
+<li><a href="#iterative-with-template-1">Iterative with template</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 # Strings #
 ## Find Anagrams ##
 ### Problems ###
