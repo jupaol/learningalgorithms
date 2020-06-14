@@ -18,7 +18,8 @@
 <ul>
 <li><a href="#problems-2">Problems</a></li>
 <li><a href="#iterative-simulated-minheap">Iterative (Simulated MinHeap)</a></li>
-<li><a href="#with-a-minheap-implementation">With a MinHeap implementation</a></li>
+<li><a href="#with-a-minheap-custom-implementation">With a MinHeap custom implementation</a></li>
+<li><a href="#iterative-with-sorteddictionary-real-heap">Iterative with SortedDictionary (real heap)</a></li>
 </ul>
 </li>
 <li><a href="#reverse-linked-list">Reverse Linked List</a>
@@ -196,7 +197,7 @@ public class Solution {
     }
 }
 ```
-### With a MinHeap implementation ###
+### With a MinHeap custom implementation ###
 ```
 public class MinHeap
 {
@@ -281,6 +282,55 @@ public class Solution {
         }
         if (prev != null) prev.next = null;
         return head;
+    }
+}
+```
+### Iterative with SortedDictionary (real heap) ###
+```
+public class MinHeap<TPriority>
+    where TPriority : IComparable<TPriority> {
+    private readonly SortedDictionary<TPriority, Queue<TPriority>> _queue;
+    public int Count { get => _queue.Count; }
+    public MinHeap() {
+        _queue = new SortedDictionary<TPriority, Queue<TPriority>>();
+    }
+    public TPriority Peek() {
+        if (_queue.Count == 0) throw new Exception("Queue is empty");
+        return _queue.First().Key;
+    }
+    public void Enqueue(TPriority priority) {
+        if (!_queue.ContainsKey(priority)) _queue.Add(priority, new Queue<TPriority>());
+        _queue[priority].Enqueue(priority);
+    }
+    public TPriority Dequeue() {
+        if (_queue.Count == 0) throw new Exception("Queue is empty");
+        TPriority tmp = _queue.First().Value.Dequeue();
+        if (_queue.First().Value.Count == 0) _queue.Remove(tmp);
+        return tmp;
+    }
+}
+public class Solution {
+    public ListNode MergeKLists(ListNode[] lists) {
+        var heap = new MinHeap<int>();
+        foreach (ListNode node in lists) {
+            ListNode tmp = node;
+            while (tmp != null) {
+                heap.Enqueue(tmp.val);
+                tmp = tmp.next;
+            }
+        }
+        ListNode root = null;
+        ListNode prev = null;
+        while (heap.Count > 0) {
+            var node = new ListNode(heap.Dequeue());
+            root ??= node;
+            if (prev == null) prev = node;
+            else {
+                prev.next = node;
+                prev = node;
+            }
+        }
+        return root;
     }
 }
 ```
