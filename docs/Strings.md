@@ -158,7 +158,7 @@ public class Solution {
 ## Palindromic substrings ##
 ### Problems ###
 - [https://leetcode.com/problems/palindromic-substrings/](https://leetcode.com/problems/palindromic-substrings/)
--
+- (DP solution): https://github.com/jupaol/learningalgorithms/blob/develop/docs/Dynamic%20Programming.md#palindromic-substrings
 ### Iterative, two pointers, expanding ###
 ```
 public class Solution {
