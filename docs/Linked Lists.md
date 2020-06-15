@@ -291,8 +291,9 @@ public class MinHeap<TPriority>
     where TPriority : IComparable<TPriority> {
     private readonly SortedDictionary<TPriority, Queue<TPriority>> _queue;
     public int Count { get => _queue.Count; }
-    public MinHeap() {
-        _queue = new SortedDictionary<TPriority, Queue<TPriority>>();
+    public MinHeap() : this(Comparer<TPriority>.Default) {}
+    public MinHeap(IComparer<TPriority> comparer) {
+        _queue = new SortedDictionary<TPriority, Queue<TPriority>>(comparer);
     }
     public TPriority Peek() {
         if (_queue.Count == 0) throw new Exception("Queue is empty");
