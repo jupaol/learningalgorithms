@@ -29,6 +29,12 @@
 <li><a href="#iterative-with-template-1">Iterative with template</a></li>
 </ul>
 </li>
+<li><a href="#palindromic-substrings">Palindromic substrings</a>
+<ul>
+<li><a href="#problems-4">Problems</a></li>
+<li><a href="#iterative-two-pointers-expanding">Iterative, two pointers, expanding</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -146,6 +152,41 @@ public class Solution {
             if (sMap[i] < tMap[i]) return false;
         }
         return true;
+    }
+}
+```
+## Palindromic substrings ##
+### Problems ###
+- [https://leetcode.com/problems/palindromic-substrings/](https://leetcode.com/problems/palindromic-substrings/)
+-
+### Iterative, two pointers, expanding ###
+```
+public class Solution {
+    public int CountSubstrings(string s) {
+        int count = 0;
+        
+        for (int i = 0; i < s.Length; i++)
+        {
+            count++;
+            count += CountPalindromeStrings(s, i - 1, i + 1);
+            count += CountPalindromeStrings(s, i - 1, i);
+        }
+        
+        return count;
+    }
+    private int CountPalindromeStrings(string s, int i, int j) {
+        int min = i;
+        int max = j;
+        int count = 0;
+        while (min < max && min >= 0 && min < s.Length && max >= 0 && max < s.Length) {
+            if (s[min] != s[max]) {
+                break;
+            }
+            count++;
+            min--;
+            max++;
+        }
+        return count;
     }
 }
 ```
