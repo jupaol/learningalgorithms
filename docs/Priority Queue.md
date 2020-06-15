@@ -2,6 +2,7 @@
 <ul>
 <li><a href="#priority-queue">Priority Queue</a>
 <ul>
+<li><a href="#simple-priority-queue-implementation-using-sorteddictionary">Simple Priority Queue implementation using SortedDictionary</a></li>
 <li><a href="#task-scheduler">Task Scheduler</a>
 <ul>
 <li><a href="#problems">Problems</a></li>
@@ -13,6 +14,31 @@
 </ul>
 
 # Priority Queue #
+## Simple Priority Queue implementation using SortedDictionary ##
+```
+public class MinHeap<TItem, TPriority> where TPriority : IComparable<TPriority> {
+    private readonly Func<TItem, TPriority> _priority;
+    private readonly SortedDictionary<TPriority, Queue<TItem>> _queue;
+    public MinHeap(Func<TItem, TPriority> priority) : this(priority, Comparer<TPriority>.Default) {}
+    public MinHeap(Func<TItem, TPriority> priority, IComparer<TPriority> comparer) {
+        _priority = priority;
+        _queue = new SortedDictionary<TPriority, Queue<TItem>>(comparer);
+    }
+    public int Count { get => _queue.Count; }
+    public void Enqueue(TItem item) {
+        TPriority priority = _priority(item);
+        if (!_queue.ContainsKey(priority)) _queue.Add(priority, new Queue<TItem>());
+        _queue[priority].Enqueue(item);
+    }
+    public TItem Dequeue() {
+        if (_queue.Count == 0) throw new Exception("Queue is empty");
+        TItem item = _queue.First().Value.Dequeue();
+        TPriority priority = _priority(item);
+        if (_queue[priority].Count == 0) _queue.Remove(priority);
+        return item;
+    }
+}
+```
 ## Task Scheduler ##
 ### Problems ###
 - [https://leetcode.com/problems/task-scheduler/](https://leetcode.com/problems/task-scheduler/)
