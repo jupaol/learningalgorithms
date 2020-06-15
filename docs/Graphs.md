@@ -31,6 +31,13 @@
 <ul>
 <li><a href="#problems-4">Problems</a></li>
 <li><a href="#iterative-dijstra">Iterative (Dijstra)</a></li>
+<li><a href="#iterative-disjtra-alternate-version-easier-heap">Iterative Disjtra (alternate version: easier heap)</a></li>
+</ul>
+</li>
+<li><a href="#cheapest-flights-within-k-stops">Cheapest flights within k stops</a>
+<ul>
+<li><a href="#problems-5">Problems</a></li>
+<li><a href="#iterative-dijstra-1">Iterative: Dijstra</a></li>
 </ul>
 </li>
 </ul>
@@ -472,4 +479,200 @@ public class Solution {
     }
 }
 ```
+### Iterative Disjtra (alternate version: easier heap) ###
+```
+public class MinHeap<TItem, TPriority> where TPriority : IComparable<TPriority> {
+    private readonly Func<TItem, TPriority> _priority;
+    private readonly SortedDictionary<TPriority, Queue<TItem>> _queue;
+    public MinHeap(Func<TItem, TPriority> priority) : this(priority, Comparer<TPriority>.Default) {}
+    public MinHeap(Func<TItem, TPriority> priority, IComparer<TPriority> comparer) {
+        _priority = priority;
+        _queue = new SortedDictionary<TPriority, Queue<TItem>>(comparer);
+    }
+    public int Count => _queue.Count;
+    public void Enqueue(TItem item) {
+        TPriority priority = _priority(item);
+        if (!_queue.ContainsKey(priority)) _queue.Add(priority, new Queue<TItem>());
+        _queue[priority].Enqueue(item);
+    }
+    public TItem Dequeue() {
+        if (_queue.Count == 0) throw new Exception("Queue is empty");
+        TItem item = _queue.First().Value.Dequeue();
+        TPriority priority = _priority(item);
+        if (_queue[priority].Count == 0) _queue.Remove(priority);
+        return item;
+    }
+}
+public class Vertex
+{
+    public int Key { get; set; }
+    public ICollection<Edge> Edges { get; }
+    public Vertex(int key) {
+        Key = key;
+        Edges = new List<Edge>();
+    }
+    public override int GetHashCode() => HashCode.Combine(Key);
+    public override bool Equals(object obj) => Equals(obj as Vertex);
+    public override string ToString() => $"({Key})";
+    public bool Equals(Vertex vertex) => vertex != null && vertex.Key == Key;
+}
+public class Edge
+{
+    public int Vertex { get; set; }
+    public int Weight { get; set; }
+    public Edge(int vertex, int weight) {
+        Vertex = vertex;
+        Weight = weight;
+    }
+}
+public class Solution {
+    public int NetworkDelayTime(int[][] times, int N, int K) {
+        Vertex[] graph = InitGraph(times, N);
+        FillGraph(times, graph);
+        int[] delayTimes = GetDelayTimes(K, graph);
+        int max = delayTimes.Max();
+        return max == int.MaxValue ? -1 : max;
+    }
+    private int[] GetDelayTimes(int initialVertex, Vertex[] graph) {
+        initialVertex--;
+        int[] distances = new int[graph.Length];
+        Vertex[] parents = new Vertex[graph.Length];
+        bool[] seen = new bool[graph.Length];
+        var heap = new MinHeap<(Vertex vertex, int distance, Vertex parent), int>(x => x.distance);
+        Array.Fill(distances, int.MaxValue);
+        heap.Enqueue((graph[initialVertex], 0, null));
+        distances[initialVertex] = 0;
+        while (heap.Count > 0) {
+            (Vertex vertex, int distance, Vertex parent) current = heap.Dequeue();
+            if (seen[current.vertex.Key]) continue;
+            seen[current.vertex.Key] = true;
+            distances[current.vertex.Key] = current.distance;
+            parents[current.vertex.Key] = current.parent;
+            foreach (Edge edge in current.vertex.Edges) {
+                if (seen[edge.Vertex]) continue;
+                int weight = distances[current.vertex.Key] + edge.Weight;
+                heap.Enqueue((graph[edge.Vertex], weight, current.vertex));
+            }
+        }
+        /*
+        EXAMPLE TO GET THE PATH
+        Console.WriteLine(string.Join(",", distances));
+        Console.WriteLine(string.Join(",", parents.Select((x, i) => $"({i}: {x?.Key})")));
+        int max = distances.Where(x => x != int.MaxValue).Max();
+        int maxId = Array.FindIndex(distances, x => x == max);
+        Console.WriteLine(maxId);
+        while (parents[maxId] != null) {
+            Console.WriteLine(parents[maxId].Key);
+            maxId = parents[maxId].Key;
+        }
+        */
+        return distances;
+    }
+    private void FillGraph(int[][] times, Vertex[] graph) {
+        for (int i = 0; i < times.Length; i++) {
+            int[] edge = times[i];
+            int sourceNode = edge[0];
+            int targetNode = edge[1];
+            int weight = edge[2];
+            sourceNode--;
+            targetNode--;
+            graph[sourceNode].Edges.Add(new Edge(targetNode, weight));
+        }
+    }
+    private Vertex[] InitGraph(int[][] times, int N) {
+        Vertex[] graph = new Vertex[N];
+        for (int i = 0; i < graph.Length; i++) {
+            graph[i] = new Vertex(i);
+        }
+        return graph;
+    }
+}
+```
+## Cheapest flights within k stops ##
+### Problems ###
+- [https://leetcode.com/problems/cheapest-flights-within-k-stops/](https://leetcode.com/problems/cheapest-flights-within-k-stops/)
+-
+### Iterative: Dijstra ###
+```
+public class PriorityQueue<TItem, TPriority> where TPriority : IComparable<TPriority> {
+    private readonly Func<TItem, TPriority> _priority;
+    private readonly SortedDictionary<TPriority, Queue<TItem>> _queue;
+    public PriorityQueue(Func<TItem, TPriority> priority) : this(priority, Comparer<TPriority>.Default) {}
+    public PriorityQueue(Func<TItem, TPriority> priority, IComparer<TPriority> comparer) {
+        _priority = priority;
+        _queue = new SortedDictionary<TPriority, Queue<TItem>>(comparer);
+    }
+    public int Count { get => _queue.Count; }
+    public void Enqueue(TItem item) {
+        TPriority priority = _priority(item);
+        if (!_queue.ContainsKey(priority)) _queue.Add(priority, new Queue<TItem>());
+        _queue[priority].Enqueue(item);
+    }
+    public TItem Dequeue() {
+        if (_queue.Count == 0) throw new Exception("Queue is empty");
+        TItem item = _queue.First().Value.Dequeue();
+        TPriority priority = _priority(item);
+        if (_queue[priority].Count == 0) _queue.Remove(priority);
+        return item;
+    }
+    public void Print() {
+        Console.WriteLine(string.Join("\n", _queue.Select(x => x.Key + " " + string.Join(",", x.Value))));
+        Console.WriteLine("**");
+    }
+}
+public class Vertex {
+    public int VertexId { get; }
+    public ICollection<Edge> Edges { get; }
+    public Vertex(int vertexId) {
+        VertexId = vertexId;
+        Edges = new List<Edge>();
+    }
+    public override int GetHashCode() => HashCode.Combine(VertexId);
+    public override bool Equals(object obj) => Equals(obj as Vertex);
+    public bool Equals(Vertex vertex) => vertex != null && vertex.VertexId == VertexId;
+    public override string ToString() => $"({VertexId})";
+}
+public class Edge {
+    public int VertexId { get; }
+    public int Weight { get; }
+    public Edge(int vertexId, int weight) {
+        VertexId = vertexId;
+        Weight = weight;
+    }
+    public override string ToString() => $"({VertexId}:{Weight})";
+}
+public class Solution {
+    public int FindCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+        // Console.WriteLine("from: " + src + " to: " + dst + " max stops: " + K);
+        var queue = new PriorityQueue<(Vertex vertex, int distance, int stops), int>(x => x.distance);
+        Vertex[] graph = InitGraph(n, flights);
+        queue.Enqueue((graph[src], 0, 0));
+        while (queue.Count > 0) {
+            (Vertex vertex, int distance, int stops) current = queue.Dequeue();
+            // Console.WriteLine("Current: " + current);
+            int vertexId = current.vertex.VertexId;
+            if (current.stops > K + 1) continue;
+            if (vertexId == dst) return current.distance;
+            foreach (Edge edge in current.vertex.Edges) {
+                queue.Enqueue((graph[edge.VertexId], edge.Weight + current.distance, current.stops + 1));
+            }
+            // queue.Print();
+        }
+        return -1;
+    }
+    private Vertex[] InitGraph(int n, int[][] flights) {
+        Vertex[] graph = new Vertex[n];
+        for (int i = 0; i < n; i++) graph[i] = new Vertex(i);
+        foreach (int[] flight in flights) {
+            int source = flight[0];
+            int dest = flight[1];
+            int price = flight[2];
+            
+            graph[source].Edges.Add(new Edge(dest, price));
+        }
+        return graph;
+    }
+}
+```
+
 
