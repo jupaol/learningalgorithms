@@ -40,6 +40,12 @@
 <li><a href="#iterative-dijstra-1">Iterative: Dijstra</a></li>
 </ul>
 </li>
+<li><a href="#course-schedule-if-a-graph-has-a-cycle-then-the-topological-view-cannot-be-generated">Course Schedule (if a graph has a cycle then the topological view cannot be generated)</a>
+<ul>
+<li><a href="#problems-6">Problems</a></li>
+<li><a href="#iterativerecursive">Iterative/Recursive</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -673,6 +679,67 @@ public class Solution {
         return graph;
     }
 }
+```
+## Course Schedule (if a graph has a cycle then the topological view cannot be generated) ##
+### Problems ###
+- [https://leetcode.com/problems/course-schedule/](https://leetcode.com/problems/course-schedule/)
+-
+### Iterative/Recursive ###
+```
+public class Vertex
+{
+    public int VertexId { get; set; }
+    public ICollection<Edge> Edges { get; }
+    public Vertex(int vertexId) {
+        VertexId = vertexId;
+        Edges = new List<Edge>();
+    }
+    public override int GetHashCode() => HashCode.Combine(VertexId);
+    public override bool Equals(object obj) => Equals(obj as Vertex);
+    public override string ToString() => $"{VertexId}: {string.Join(",", Edges)}";
+    public bool Equals(Vertex vertex) => vertex != null && vertex.VertexId == VertexId;
+}
+public class Edge
+{
+    public Vertex Vertex { get; set; }
+    public Edge(Vertex vertex) {
+        Vertex = vertex;
+    }
+    public override string ToString() => $"{Vertex.VertexId}";
+}
+public class Solution {
+    public bool CanFinish(int numCourses, int[][] prerequisites) {
+        Vertex[] graph = CreateGraph(numCourses, prerequisites);
+        int[] seen = new int[graph.Length];
+        for (int i = 0; i < graph.Length; i++)
+            if (seen[i] == 0)
+                if (HasCycle(graph, i, seen)) return false;
+        return true;
+    }
+    private bool HasCycle(Vertex[] graph, int index, int[] seen) {
+        if (seen[index] == 2) return true;
+        seen[index] = 2;
+        Vertex current = graph[index];
+        for (int i = 0; i < current.Edges.Count; i++) {
+            Edge edge = current.Edges.ElementAt(i);
+            if (seen[edge.Vertex.VertexId] != 1)
+                if (HasCycle(graph, edge.Vertex.VertexId, seen)) return true;
+        }
+        seen[index] = 1;
+        return false;
+    }
+    private Vertex[] CreateGraph(int n, int[][] prerequisites) {
+        Vertex[] graph = new Vertex[n];
+        for (int i = 0; i < n; i++) graph[i] = new Vertex(i);
+        foreach (int[] pre in prerequisites) {
+            int child = pre[0];
+            int parent = pre[1];
+            graph[parent].Edges.Add(new Edge(graph[child]));
+        }
+        return graph;
+    }
+}
+
 ```
 
 
