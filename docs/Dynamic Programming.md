@@ -58,7 +58,7 @@ public class Solution {
 ## Longest Palindromic substring ##
 ### Problems ###
 - [https://leetcode.com/problems/longest-palindromic-substring/](https://leetcode.com/problems/longest-palindromic-substring/)
-- (Two pointer solution): 
+- (Two pointer solution): https://github.com/jupaol/learningalgorithms/blob/develop/docs/Strings.md#longest-palindromic-substrings
 ### Dynamic Programming ###
 ```
 public class Solution {
