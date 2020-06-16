@@ -199,7 +199,7 @@ public class Solution {
 ## Longest Palindromic substrings ##
 ### Problems ###
 - [https://leetcode.com/problems/longest-palindromic-substring/](https://leetcode.com/problems/longest-palindromic-substring/)
-- (DP version): 
+- (DP version): https://github.com/jupaol/learningalgorithms/blob/develop/docs/Dynamic%20Programming.md#longest-palindromic-substring
 ### Iterative, two pointers expanding ###
 ```
 public class Solution {
