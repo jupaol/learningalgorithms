@@ -35,6 +35,12 @@
 <li><a href="#iterative-two-pointers-expanding">Iterative, two pointers, expanding</a></li>
 </ul>
 </li>
+<li><a href="#longest-palindromic-substrings">Longest Palindromic substrings</a>
+<ul>
+<li><a href="#problems-5">Problems</a></li>
+<li><a href="#iterative-two-pointers-expanding-1">Iterative, two pointers expanding</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -187,6 +193,41 @@ public class Solution {
             max++;
         }
         return count;
+    }
+}
+```
+## Longest Palindromic substrings ##
+### Problems ###
+- [https://leetcode.com/problems/longest-palindromic-substring/](https://leetcode.com/problems/longest-palindromic-substring/)
+- (DP version): 
+### Iterative, two pointers expanding ###
+```
+public class Solution {
+    public string LongestPalindrome(string s) {
+        if (string.IsNullOrWhiteSpace(s)) return "";
+        (int min, int max, int len) res = (-1, -1, int.MinValue);
+        for (int i = 0; i < s.Length; i++) {
+            if (1 > res.len) res = (i, i, 1);
+            var tmp = GetLongestPalindrome(s, i - 1, i + 1);
+            if (tmp.len > res.len) res = tmp;
+            tmp = GetLongestPalindrome(s, i - 1, i);
+            if (tmp.len > res.len) res = tmp;
+        }
+        return s.Substring(res.min, res.len);
+    }
+    private (int min, int max, int len) GetLongestPalindrome(string s, int i, int j) {
+        int min = i;
+        int max = j;
+        (int min, int max, int len) res = (-1, -1, int.MinValue);
+        while (min < max && min >= 0 && j >= 0 && min < s.Length && max < s.Length) {
+            if (s[min] != s[max]) {
+                break;
+            }
+            res = (min, max, max - min + 1);
+            min--;
+            max++;
+        }
+        return res;
     }
 }
 ```
