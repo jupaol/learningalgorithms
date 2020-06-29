@@ -26,6 +26,7 @@
 <ul>
 <li><a href="#problems-3">Problems</a></li>
 <li><a href="#iterative-1">Iterative</a></li>
+<li><a href="#recursive-1">Recursive</a></li>
 </ul>
 </li>
 <li><a href="#reverse-linked-list-from-m-to-n">Reverse Linked List from m to n</a>
@@ -63,6 +64,13 @@
 <ul>
 <li><a href="#problems-9">Problems</a></li>
 <li><a href="#iterative-7">Iterative</a></li>
+</ul>
+</li>
+<li><a href="#rotate-list">Rotate List</a>
+<ul>
+<li><a href="#problems-10">Problems</a></li>
+<li><a href="#iterative-8">Iterative</a></li>
+<li><a href="#pointer-manipulation">Pointer manipulation</a></li>
 </ul>
 </li>
 </ul>
@@ -354,6 +362,21 @@ public ListNode ReverseList(ListNode head) {
 	return prev;
 }
 ```
+### Recursive ###
+```
+private ListNode Rec(ListNode head) {
+	if (head == null) {
+		return null;
+	}
+	if (head.next == null) {
+		return head;
+	}
+	ListNode tmp = Rec(head.next);
+	head.next.next = head;
+	head.next = null;
+	return tmp;
+}
+```
 ## Reverse Linked List from m to n ##
 ### Problems ###
 - [https://leetcode.com/problems/reverse-linked-list-ii/](https://leetcode.com/problems/reverse-linked-list-ii/)
@@ -575,6 +598,104 @@ public class BrowserHistory {
             _current = _current.Next;
         return _current.Value;
     }
+}
+```
+## Rotate List ##
+### Problems ###
+- [https://leetcode.com/problems/rotate-list/](https://leetcode.com/problems/rotate-list/)
+-
+### Iterative ###
+```
+public class Solution {
+    public ListNode RotateRight(ListNode head, int k) {
+        if (head == null) {
+            return null;
+        }
+        ListNode newHead = null;
+        int len = Count(head);
+        int offset = k % len;
+        if (offset == 0) {
+            return head;
+        }
+        if (offset < 0) {
+            offset += len;
+        }
+        offset++;
+        newHead = Reverse(head, 1, len);
+        newHead = Reverse(newHead, 1, offset - 1);
+        newHead = Reverse(newHead, offset, len);
+        return newHead;
+    }
+    private void Print(ListNode head) {
+        while (head != null) {
+            Console.Write(head.val + " ");
+            head = head.next;
+        }
+        Console.WriteLine();
+    }
+    private ListNode Reverse(ListNode head, int min, int max) {
+        ListNode dummy = new ListNode(-1) { next = head };
+        ListNode curr = dummy;
+        for (int i = 1; i < min && curr != null; i++) {
+            curr = curr.next;
+        }
+        if (curr == null) {
+            throw new ArgumentOutOfRangeException(nameof(min));
+        }
+        ListNode prev = curr;
+        curr = curr.next;
+        for (int i = min; i < max; i++) {
+            // 1 2 3 4 5         1 3 2 4 5
+            // P C T             P T C
+            ListNode tmp = curr.next;
+            curr.next = tmp.next;
+            tmp.next = prev.next;
+            prev.next = tmp;
+        }
+        return dummy.next;
+    }
+    private int Count(ListNode head) {
+        int count = 0;
+        while (head != null) {
+            count++;
+            head = head.next;
+        }
+        return count;
+    }
+}
+```
+### Pointer manipulation ###
+```
+public ListNode RotateRight(ListNode head, int k) {
+	if (head == null) {
+		return null;
+	}
+	if (k == 0) {
+		return head;
+	}
+	int len = 0;
+	ListNode curr = head;
+	ListNode last = null;
+	while (curr != null) {
+		len++;
+		last = curr;
+		curr = curr.next;
+	}
+	int offset = k % len;
+	if (offset == 0) {
+		return head;
+	}
+	if (head.next == null && offset == 1) {
+		return head;
+	}
+	curr = head;
+	for (int i = 0; i < len - offset - 1; i++) {
+		curr = curr.next;
+	}
+	ListNode newHead = curr.next;
+	curr.next = null;
+	last.next = head;
+	return newHead;
 }
 ```
 
