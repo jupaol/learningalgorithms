@@ -116,6 +116,13 @@
 <li><a href="#iterative-13">Iterative</a></li>
 </ul>
 </li>
+<li><a href="#unique-binary-trees-or-bst">Unique Binary Trees (or BST)</a>
+<ul>
+<li><a href="#problems-18">Problems</a></li>
+<li><a href="#iterative-dynamic-programming">Iterative (Dynamic Programming)</a></li>
+<li><a href="#recursive-9">Recursive</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -658,6 +665,60 @@ public bool IsCompleteTree(TreeNode root) {
 		}
 	}
 	return true;
+}
+```
+## Unique Binary Trees (or BST) ##
+### Problems ###
+- [https://leetcode.com/problems/unique-binary-search-trees/](https://leetcode.com/problems/unique-binary-search-trees/)
+-
+### Iterative (Dynamic Programming) ###
+```
+public class Solution {
+    public int NumTrees(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            for (int left = 0; left < i; left++) {
+                int right = i - left - 1;
+                dp[i] += dp[left] * dp[right];
+            }
+        }
+        return dp[n];
+    }
+}
+```
+### Recursive ###
+```
+public class Solution {
+    public int NumTrees(int n) {
+        if (n < 0) {
+            return -1;
+        }
+        if (n == 0 || n == 1) {
+            return 1;
+        }
+        var memo = new Dictionary<int, int>();
+        memo.Add(0, 1);
+        memo.Add(1, 1);
+        return Rec(n, memo);
+    }
+    private int Rec(int n, IDictionary<int, int> memo) {
+        if (memo.ContainsKey(n)) {
+            return memo[n];
+        }
+        int count = 0;
+        for (int left = 0; left < n; left++) {
+            int right = n - left - 1;
+            int lCount = Rec(left, memo);
+            int rCount = Rec(right, memo);
+            count += lCount * rCount;
+        }
+        if (!memo.ContainsKey(n)) {
+            memo.Add(n, count);
+        }
+        return count;
+    }
 }
 ```
 
