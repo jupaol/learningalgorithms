@@ -41,6 +41,12 @@
 <li><a href="#iterative-two-pointers-expanding-1">Iterative, two pointers expanding</a></li>
 </ul>
 </li>
+<li><a href="#longest-duplicate-substring">Longest duplicate substring</a>
+<ul>
+<li><a href="#problems-6">Problems</a></li>
+<li><a href="#binary-search--rabin-karp">Binary Search + Rabin-Karp</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -228,6 +234,103 @@ public class Solution {
             max++;
         }
         return res;
+    }
+}
+```
+## Longest duplicate substring ##
+### Problems ###
+- [https://leetcode.com/problems/longest-duplicate-substring/](https://leetcode.com/problems/longest-duplicate-substring/)
+-
+### Binary Search + Rabin-Karp ###
+```
+public class Solution {
+    public string LongestDupSubstring(string S) {
+        if (string.IsNullOrWhiteSpace(S)) {
+            return string.Empty;
+        }
+        return LongestDuplicatedStrings(S, 26, int.MaxValue);
+    }
+    // O(nlog(n)), O(n)
+    // The log(n) comes from the binary search and the 'n' comes from the Rabin-Karp algo
+    private string LongestDuplicatedStrings(string s, int expBase, long mod) {
+        int min = 0;
+        int max = s.Length;
+        (int start, int len) res = (-1, 0);
+        while (min <= max) {
+            int mid = min + (max - min) / 2;
+            int index = FindIndex(s, mid, expBase, mod);
+            if (index != -1) {
+                min = mid + 1;
+                if (mid > res.len) {
+                    res = (index, mid);
+                }
+            }
+            else {
+                max = mid - 1;
+            }
+        }
+        if (res.start == -1) {
+            return string.Empty;
+        }
+        return s.Substring(res.start, res.len);
+    }
+    // O(n), O(n): average case.
+    // O(n^2), O(n): worst case (if there are many collisions based on the hash algorithm)
+    private int FindIndex(string source, int m, int expBase, long mod) {
+        long expFactor = GetExpFactor(m, expBase, mod); // O(n), O(1)
+        long sourceHash = CalculateHash(source, 0, m - 1, expBase, mod); // O(n), O(1)
+        var hash = new Dictionary<long, int>();
+        hash.Add(sourceHash, 0);
+        for (int i = m; i < source.Length; i++) { // O(n)
+            char prev = source[i - m];
+            char curr = source[i];
+            sourceHash = ReCalculateHash(sourceHash, prev, curr, m, expBase, mod, expFactor); // O(1)
+            if (hash.ContainsKey(sourceHash)) {
+                if (Check(source, m, i - m + 1, hash[sourceHash])) { // O(n)
+                    return i - m + 1;
+                }
+            }
+            else {
+                hash.Add(sourceHash, i - m + 1);
+            }
+        }
+        return -1;
+    }
+    // O(n), O(1)
+    private bool Check(string source, int len, int index1, int index2) {
+        for (int i = 1; i <= len; i++) {
+            if (index1 >= source.Length || index2 >= source.Length) {
+                return false;
+            }
+            if (source[index1++] != source[index2++]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    // O(1), O(1)
+    private long ReCalculateHash(
+        long prevHash, char prev, char curr, int len, int expBase, long mod, long expFactor) {
+        long hash = (prevHash - (prev * expFactor % mod) + mod) % mod;
+        hash = (hash * expBase + curr) % mod;
+        return hash;
+    }
+    // O(n), O(1)
+    private long GetExpFactor(int len, int expBase, long mod) {
+        long factor = 1;
+        for (int i = 0; i < len - 1; i++) {
+            factor = (factor * expBase) % mod;
+        }
+        return factor;
+    }
+    // O(n), O(1)
+    private long CalculateHash(string s, int min, int max, int expBase, long mod) {
+        long hash = 0;
+        for (int i = min; i <= max; i++) {
+            char c = s[i];
+            hash = (hash * expBase + c) % mod;
+        }
+        return hash;
     }
 }
 ```
