@@ -52,6 +52,37 @@
 <li><a href="#iterativerecursive-1">Iterative/Recursive</a></li>
 </ul>
 </li>
+<li><a href="#is-graph-bipartite">Is Graph Bipartite</a>
+<ul>
+<li><a href="#problems-8">Problems</a></li>
+<li><a href="#iterative">Iterative</a></li>
+</ul>
+</li>
+<li><a href="#possible-bipartition">Possible BiPartition</a>
+<ul>
+<li><a href="#problems-9">Problems</a></li>
+<li><a href="#iterative-1">Iterative</a></li>
+</ul>
+</li>
+<li><a href="#distances-from-all-buildings">Distances from all buildings</a>
+<ul>
+<li><a href="#problems-10">Problems</a></li>
+<li><a href="#iterative-2">Iterative</a></li>
+</ul>
+</li>
+<li><a href="#eulerian-path">Eulerian Path</a>
+<ul>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#problems-11">Problems</a></li>
+<li><a href="#recursive">Recursive</a></li>
+</ul>
+</li>
+<li><a href="#number-of-connected-components">Number of Connected Components</a>
+<ul>
+<li><a href="#problems-12">Problems</a></li>
+<li><a href="#iterative-3">Iterative</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -807,6 +838,434 @@ public class Solution {
             int child = pre[0];
             int parent = pre[1];
             graph[parent].Edges.Add(new Edge(graph[child]));
+        }
+        return graph;
+    }
+}
+```
+## Is Graph Bipartite ##
+### Problems ###
+- [https://leetcode.com/problems/is-graph-bipartite/](https://leetcode.com/problems/is-graph-bipartite/)
+-
+### Iterative ###
+```
+public class Solution {
+    public bool IsBipartite(int[][] graph) {
+        int[] color = new int[graph.Length];
+        Array.Fill(color, -1);
+        for (int i = 0; i < graph.Length; i++) {
+            if (color[i] == -1) {
+                if (!CanBipartite(graph, color, i)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    private bool CanBipartite(int[][] graph, int[] color, int index) {
+        var queue = new Queue<int>();
+        queue.Enqueue(index);
+        color[index] = 1;
+        while (queue.Count > 0) {
+            int current = queue.Dequeue();
+            foreach (int child in graph[current]) {
+                if (color[current] == color[child]) {
+                    return false;
+                }
+                if (color[child] == -1) {
+                    color[child] = 1 - color[current];
+                    queue.Enqueue(child);
+                }
+            }
+        }
+        return true;
+    }
+}
+```
+## Possible BiPartition ##
+### Problems ###
+- [https://leetcode.com/problems/possible-bipartition/](https://leetcode.com/problems/possible-bipartition/)
+-
+### Iterative ###
+```
+public class Vertex {
+    public int VertexId { get; }
+    public ICollection<Edge> Edges { get; }
+    public Vertex(int vertexId) {
+        VertexId = vertexId;
+        Edges = new List<Edge>();
+    }
+    public override int GetHashCode() => HashCode.Combine(VertexId);
+    public override bool Equals(object obj) => Equals(obj as Vertex);
+    public bool Equals(Vertex vertex) => vertex != null && vertex.VertexId == VertexId;
+}
+public class Edge {
+    public Vertex Vertex { get; }
+    public Edge(Vertex vertex) {
+        Vertex = vertex;
+    }
+}
+public class Solution {
+    public bool PossibleBipartition(int N, int[][] dislikes) {
+        Vertex[] graph = InitGraph(N, dislikes);
+        int[] color = new int[graph.Length];
+        Array.Fill(color, -1);
+        for (int i = 0; i < graph.Length; i++) {
+            if (color[i] == -1) {
+                if (!CanBipartite(graph, color, i)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    private bool CanBipartite(Vertex[] graph, int[] color, int index) {
+        var queue = new Queue<Vertex>();
+        queue.Enqueue(graph[index]);
+        color[index] = 1;
+        while (queue.Count > 0) {
+            var current = queue.Dequeue();
+            foreach (Edge edge in current.Edges) {
+                if (color[current.VertexId] == color[edge.Vertex.VertexId]) {
+                    return  false;
+                }
+                if (color[edge.Vertex.VertexId] == -1) {
+                    color[edge.Vertex.VertexId] = 1 - color[current.VertexId];
+                    queue.Enqueue(edge.Vertex);
+                }
+            }
+        }
+        return true;
+    }
+    private Vertex[] InitGraph(int n, int[][] dislikes) {
+        Vertex[] graph = new Vertex[n + 1];
+        for (int i = 0; i <= n; i++) {
+            graph[i] = new Vertex(i);
+        }
+        foreach (int[] item in dislikes) {
+            int a = item[0];
+            int b = item[1];
+            a--;
+            b--;
+            graph[a].Edges.Add(new Edge(graph[b]));
+            graph[b].Edges.Add(new Edge(graph[a]));
+        }
+        return graph;
+    }
+}
+```
+## Distances from all buildings ##
+### Problems ###
+- [https://leetcode.com/problems/shortest-distance-from-all-buildings/](https://leetcode.com/problems/shortest-distance-from-all-buildings/)
+-
+### Iterative ###
+```
+public class Coor {
+    public int Row { get; set; }
+    public int Col { get; set; }
+    public Coor(int row, int col) {
+        Row = row;
+        Col = col;
+    }
+    public override int GetHashCode() => HashCode.Combine(Row, Col);
+    public override bool Equals(object obj) => Equals(obj as Coor);
+    public override string ToString() => $"({Row},{Col})";
+    public bool Equals(Coor coor) => coor != null && coor.Row == Row && coor.Col == Col;
+}
+public class Solution {
+    // O(nm + bnm), O(1 + nm + 2nm)
+    // O(nm * (1 + b)), O(1 + nm * (1 + 2))
+    // O(nm * (1 + b)), O(1 + 3nm)
+    // O(nmb + nm), O(nm)
+    // O(nmb), O(nm)
+    // where b is the number of buildings
+    public int ShortestDistance(int[][] grid) {
+        if ((grid?.Length ?? 0) == 0) {
+            return -1;
+        }
+        int?[][] globalCount = new int?[grid.Length][];
+        int[][] reachCount = new int[grid.Length][];
+        int numOfBuildings = 0;
+        for (int i = 0; i < grid.Length; i++) {
+            globalCount[i] = new int?[grid[i].Length];
+            reachCount[i] = new int[grid[i].Length];
+            for (int j = 0; j < grid[i].Length; j++) {
+                if (grid[i][j] == 1) {
+                    numOfBuildings++;
+                }
+            }
+        }
+        // O(bnm), O(nm)
+        bool reachedAll = SetDistances(grid, globalCount, reachCount);
+        if (!reachedAll) {
+            return -1;
+        }
+        // O(nm), O(1)
+        return FindMin(globalCount, numOfBuildings, reachCount);
+    }
+    // O(nm), O(1)
+    private int FindMin(int?[][] globalCount, int buildings, int[][] reachCount) {
+        int min = int.MaxValue;
+        for (int i = 0; i < globalCount.Length; i++) {
+            for (int j = 0; j < globalCount[i].Length; j++) {
+                if (globalCount[i][j] == null) {
+                    continue;
+                }
+                if (reachCount[i][j] != buildings) {
+                    continue;
+                }
+                min = Math.Min(globalCount[i][j].Value, min);
+            }
+        }
+        return min == int.MaxValue ? -1 : min;
+    }
+    // O(nm), O(1)
+    // O(bnm), O(nm)
+    // where b is the number of buildings
+    private bool SetDistances(int[][] graph, int?[][] globalCount, int[][] reachCount) {
+        for (int i = 0; i < graph.Length; i++) {
+            for (int j = 0; j < graph[i].Length; j++) {
+                if (graph[i][j] != 1) {
+                    continue;
+                }
+                // O(nm), O(nm)
+                bool reachedAll = TraverseGraph(
+                    graph, new Coor(i, j), new HashSet<Coor>(), globalCount, reachCount);
+                if (!reachedAll) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    // O(nm), O(2nm)
+    // O(nm), O(nm)
+    private bool TraverseGraph(
+        int[][] graph, Coor initial, HashSet<Coor> seen, int?[][] res, int[][] reachCount) {
+        var queue = new Queue<Coor>();
+        int count = 0;
+        queue.Enqueue(initial);
+        seen.Add(initial);
+        while (queue.Count > 0) {
+            int size = queue.Count;
+            count++;
+            while (size > 0) {
+                Coor current = queue.Dequeue();
+                var nearby = FindNearby(graph, current);
+                if (graph[current.Row][current.Col] == 1 && nearby.Count == 0) {
+                    return false;
+                }
+                foreach (Coor coor in nearby) {
+                    if (seen.Contains(coor)) {
+                        continue;
+                    }
+                    seen.Add(coor);
+                    queue.Enqueue(coor);
+                    res[coor.Row][coor.Col] = count + (res[coor.Row][coor.Col] ?? 0);
+                    reachCount[coor.Row][coor.Col]++;
+                }
+                size--;
+            }
+        }
+        return true;
+    }
+    // O(1), O(4)
+    // O(1), O(1)
+    private IList<Coor> FindNearby(int[][] graph, Coor current) {
+        int[] rowMove = new int[] { 1, -1, 0, 0 };
+        int[] colMove = new int[] { 0, 0, 1, -1} ;
+        int rows = graph.Length;
+        int cols = graph[0].Length;
+        var list = new List<Coor>();
+        for (int i = 0; i < rowMove.Length; i++) {
+            int row = rowMove[i] + current.Row;
+            int col = colMove[i] + current.Col;
+            if (row >= 0 && col >= 0 && row < rows && col < cols) {
+                if (graph[row][col] == 0) {
+                    list.Add(new Coor(row, col));
+                }
+            }
+        }
+        return list;
+    }
+}
+
+```
+## Eulerian Path ##
+### Notes ###
+|  | Eulerian Circuit | Eulerian Path |
+|--|--|--|
+| Undirected | Every vertex has **even** degree |Every vertex has **even** degree **OR** exactly two vertices have odd degree |
+| Directed | Every vertex has equal `indegree` and `outdegree` | At most one vertex has: `outdegree - indegree == 1` **AND** at most one vertex has `indegree - outdegree == 1` **AND** all other vertices have equal `indegree` and `outdegree` |
+### Problems ###
+- [https://leetcode.com/problems/reconstruct-itinerary/](https://leetcode.com/problems/reconstruct-itinerary/)
+-
+### Recursive ###
+```
+public class Degree {
+    public int In { get; set; }
+    public int Out { get; set; }
+    public Degree(int @in, int @out) {
+        In = @in;
+        Out = @out;
+    }
+    public override string ToString() => $"({In}, {Out})";
+}
+public class Solution {
+    public IList<string> FindItinerary(IList<IList<string>> tickets) {
+        var list = new List<string>();
+        int len = tickets.Count;
+        IDictionary<string, List<string>> graph = BuildGraph(tickets);
+        IDictionary<string, Degree> inOut = CountInOutDegree(graph);
+        // Console.WriteLine(string.Join("\n", graph.Select(x => x.Key + ": " + string.Join(",", x.Value))));
+        // Console.WriteLine(string.Join("\n", inOut.Select(x => x.Key + ": " + string.Join(",", x.Value))));
+        // Console.WriteLine("***");
+        if (!ContainsEulerianPath(inOut)) {
+            Console.WriteLine("NO Eulerian");
+            return list;
+        }
+        Traverse(graph, inOut, "JFK", list, new HashSet<(string from, string to, int index)>());
+        list.Reverse();
+        return list;
+    }
+    private void Traverse(
+        IDictionary<string, List<string>> graph,
+        IDictionary<string, Degree> inOut,
+        string from,
+        IList<string> list,
+        HashSet<(string from, string to, int index)> seen) {
+        for (int i = 0; i < graph[from].Count; i++) {
+            (string from, string to, int index) curr = (from, graph[from][i], i);
+            if (seen.Contains(curr)) {
+                continue;
+            }
+            seen.Add(curr);
+            // Only needed if we iterate through the "out-degree" count but in this case we are using
+            // a HashSet to mark edges as seen so we don't realy need to decrement the "out-degree"
+            // inOut[from].Out--;
+            Traverse(graph, inOut, curr.to, list, seen);
+        }
+        // PostOrder
+        list.Add(from);
+    }
+    // This mehtod finds the start node
+    private string FindStartNode(IDictionary<string, Degree> inOut) {
+        string start = string.Empty;
+        foreach (var item in inOut) {
+            if (item.Value.Out - item.Value.In == 1) {
+                return item.Key;
+            }
+            if (item.Value.Out > 0) {
+                start = item.Key;
+            }
+        }
+        return start;
+    }
+    // O(v), O(1)
+    private bool ContainsEulerianPath(IDictionary<string, Degree> inOut) {
+        int startNodes = 0;
+        int endNodes = 0;
+        foreach (var item in inOut) {
+            if (Math.Abs(item.Value.In - item.Value.Out) > 1) {
+                return false;
+            }
+            if (item.Value.In - item.Value.Out == 1) {
+                endNodes++;
+            }
+            if (item.Value.Out - item.Value.In == 1) {
+                startNodes++;
+            }
+        }
+        return (startNodes == 0 && endNodes == 0) || (startNodes == 1 && endNodes == 1);
+    }
+    // O(ve), O(v)
+    private IDictionary<string, Degree> CountInOutDegree(IDictionary<string, List<string>> graph) {
+        var map = new Dictionary<string, Degree>();
+        foreach (var item in graph) {
+            if (!map.ContainsKey(item.Key)) {
+                map.Add(item.Key, new Degree(0, 0));
+            }
+            map[item.Key].Out = item.Value.Count;
+            foreach (string s in item.Value) {
+                if (!map.ContainsKey(s)) {
+                    map.Add(s, new Degree(0, 0));
+                }
+                map[s].In++;
+            }
+        }
+        return map;
+    }
+    // O(ve*log(e) + ve)
+    // O(ve*log(e)), O(v+e)
+    private IDictionary<string, List<string>> BuildGraph(IList<IList<string>> tickets) {
+        var graph = new Dictionary<string, List<string>>();
+        foreach (IList<string> list in tickets) {
+            string from = list[0];
+            string to = list[1];
+            if (!graph.ContainsKey(from)) {
+                graph.Add(from, new List<string>());
+            }
+            if (!graph.ContainsKey(to)) {
+                graph.Add(to, new List<string>());
+            }
+            graph[from].Add(to);
+        }
+        foreach (var item in graph) {
+            item.Value.Sort();
+        }
+        return graph;
+    }
+}
+```
+## Number of Connected Components ##
+### Problems ###
+- [https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)
+-
+### Iterative ###
+```
+public class Solution {
+    public int CountComponents(int n, int[][] edges) {
+        if (edges == null) {
+            throw new ArgumentNullException(nameof(edges));
+        }
+        if (n <= 0) {
+            return 0;
+        }
+        IList<int>[] graph = BuildGraph(n, edges);
+        bool[] seen = new bool[graph.Length];
+        int count = 0;
+        for (int i = 0; i < graph.Length; i++) {
+            if (!seen[i]) {
+                count++;
+                Traverse(graph, seen, i);
+            }
+        }
+        return count;
+    }
+    private void Traverse(IList<int>[] graph, bool[] seen, int initial) {
+        var stack = new Stack<int>();
+        stack.Push(initial);
+        while (stack.Count > 0) {
+            int current = stack.Pop();
+            seen[current] = true;
+            foreach (int child in graph[current]) {
+                if (!seen[child]) {
+                    stack.Push(child);
+                    seen[child] = true;
+                }
+            }
+        }
+    }
+    private IList<int>[] BuildGraph(int n, int[][] edges) {
+        IList<int>[] graph = new IList<int>[n];
+        for (int i = 0; i < graph.Length; i++) {
+            graph[i] = new List<int>();
+        }
+        for (int i = 0; i < edges.Length; i++) {
+            int from = edges[i][0];
+            int to = edges[i][1];
+            graph[from].Add(to);
+            graph[to].Add(from);
         }
         return graph;
     }
