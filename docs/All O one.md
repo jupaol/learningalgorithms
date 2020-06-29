@@ -21,41 +21,35 @@
 ```
 public class AllOne {
     private readonly IDictionary<string, int> _keyMap;
-    private readonly IDictionary<int, LinkedListNode<IDictionary<string, string>>> _valueMap;
-    private readonly LinkedList<IDictionary<string, string>> _list;
+    private readonly IDictionary<int, LinkedListNode<HashSet<string>>> _valueMap;
+    private readonly LinkedList<HashSet<string>> _list;
     public AllOne() {
         _keyMap = new Dictionary<string, int>();
-        _valueMap = new Dictionary<int, LinkedListNode<IDictionary<string, string>>>();
-        _list = new LinkedList<IDictionary<string, string>>();
+        _valueMap = new Dictionary<int, LinkedListNode<HashSet<string>>>();
+        _list = new LinkedList<HashSet<string>>();
     }
     public void Inc(string key) {
-        if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
         if (_keyMap.ContainsKey(key)) {
             Change(key, 1);
-            return;
-        }
-        _keyMap.Add(key, 1);
-        if (_valueMap.ContainsKey(1)) {
-            _valueMap[1].Value.Add(key, key);
         }
         else {
-            var node = new LinkedListNode<IDictionary<string, string>>(
-                new Dictionary<string, string> { { key, key } });
-            _list.AddFirst(node);
-            _valueMap.Add(1, node);
+            Add(key);
         }
     }
     public void Dec(string key) {
-        if (!_keyMap.ContainsKey(key)) return;
+        if (!_keyMap.ContainsKey(key)) {
+            return;
+        }
         Change(key, -1);
     }
     public string GetMaxKey() {
         if (_list.Count == 0) return string.Empty;
-        return _list.Last.Value.First().Key;
+        return _list.Last.Value.First();
     }
     public string GetMinKey() {
         if (_list.Count == 0) return string.Empty;
-        return _list.First.Value.First().Key;
+        return _list.First.Value.First();
+
     }
     private void Change(string key, int offset) {
         int oldVal = _keyMap[key];
@@ -65,24 +59,40 @@ public class AllOne {
         }
         else {
             _keyMap[key] = newVal;
-            if (_valueMap.ContainsKey(newVal)) {
-                _valueMap[newVal].Value.Add(key, key);
-            }
-            else {
-                var node = new LinkedListNode<IDictionary<string, string>>(
-                    new Dictionary<string, string> { { key, key } });
-                if (offset == 1) _list.AddAfter(_valueMap[oldVal], node);
-                else _list.AddBefore(_valueMap[oldVal], node);
-                _valueMap.Add(newVal, node);
-            }
+            AddKeyValue(key, newVal, oldVal);
         }
-        _valueMap[oldVal].Value.Remove(key);
-        if (_valueMap[oldVal].Value.Count == 0) {
-            _list.Remove(_valueMap[oldVal].Value);
-            _valueMap.Remove(oldVal);
+        CleanNodeValue(key, oldVal);
+    }
+    private void CleanNodeValue(string key, int oldValue) {
+        _valueMap[oldValue].Value.Remove(key);
+        if (_valueMap[oldValue].Value.Count == 0) {
+            _list.Remove(_valueMap[oldValue]);
+            _valueMap.Remove(oldValue);
         }
     }
+    private void Add(string key) {
+        AddKeyValue(key, 1, null);
+        _keyMap.Add(key, 1);
+    }
+    private void AddKeyValue(string key, int value, int? oldValue) {
+        if (!_valueMap.ContainsKey(value)) {
+            _valueMap.Add(value, new LinkedListNode<HashSet<string>>(new HashSet<string>()));
+            if (oldValue == null) {
+                _list.AddFirst(_valueMap[value]);
+            }
+            else {
+                if (value > oldValue.Value) {
+                    _list.AddAfter(_valueMap[oldValue.Value], _valueMap[value]);
+                }
+                else {
+                    _list.AddBefore(_valueMap[oldValue.Value], _valueMap[value]);
+                }
+            }
+        }
+        _valueMap[value].Value.Add(key);
+    }
 }
+
 ```
 
 
