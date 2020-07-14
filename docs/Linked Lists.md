@@ -73,6 +73,12 @@
 <li><a href="#pointer-manipulation">Pointer manipulation</a></li>
 </ul>
 </li>
+<li><a href="#reverse-linkedlist-in-k-groups">Reverse LinkedList in K groups</a>
+<ul>
+<li><a href="#problems-11">Problems</a></li>
+<li><a href="#iterative-9">Iterative</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -696,6 +702,44 @@ public ListNode RotateRight(ListNode head, int k) {
 	curr.next = null;
 	last.next = head;
 	return newHead;
+}
+```
+## Reverse LinkedList in K groups ##
+### Problems ###
+- [https://leetcode.com/problems/reverse-nodes-in-k-group/](https://leetcode.com/problems/reverse-nodes-in-k-group/)
+-
+### Iterative ###
+```
+public class Solution {
+    public ListNode ReverseKGroup(ListNode head, int k) {
+        if (head == null) {
+            return null;
+        }
+        int count = Count(head);
+        var dummy = new ListNode(-1) { next = head };
+        ListNode curr = dummy.next;
+        ListNode prev = dummy;
+        while (count >= k) {
+            for (int i = 1; i < k; i++) {
+                ListNode tmp = curr.next;
+                curr.next = tmp.next;
+                tmp.next = prev.next;
+                prev.next = tmp;
+            }
+            prev = curr;
+            curr = prev.next;
+            count -= k;
+        }
+        return dummy.next;
+    }
+    private int Count(ListNode head) {
+        int count = 0;
+        while (head != null) {
+            count++;
+            head = head.next;
+        }
+        return count;
+    }
 }
 ```
 
